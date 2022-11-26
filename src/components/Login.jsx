@@ -13,27 +13,41 @@ function Login() {
   const [isLogin, setIsLogin] = useState(false);
   const [dataDokter, setDataDokter] = useState();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    for (let i = 0; i < dataDokter.length; i++) {
-      if (username === dataDokter[i].username && password === dataDokter[i].password) {
-        setIsLogin(true);
-        tele("/dashboard");
-
-        break;
-      } else {
-        alert("Masukkan username atau password yang benar");
-        break;
-      }
-    }
-  };
-
   useEffect(() => {
-    axios.get("https://6350e03cdfe45bbd55b074ed.mockapi.io/medTechAPI/users").then((response) => {
-      setDataDokter(response.data);
+    axios.get("https://rolenakes-production.up.railway.app/auth/register").then((response) => {
+      setDataDokter(response.data.data);
+      console.log(response.data.data);
+      console.log(dataDokter);
     });
   }, []);
+  // for (let i = 0; i < dataDokter.length; i++) {
+  //   console.log(dataDokter[i]);
+  // }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let isAlert = false;
+    for (let i = 0; i < dataDokter.length; i++) {
+      // if (username === dataDokter[i].email && password === dataDokter[i].password) {
+      if (username === dataDokter[i].email) {
+        console.log(dataDokter[i]);
+        const key = "user";
+        localStorage.setItem(key, JSON.stringify(dataDokter[i]));
+        // localStorage.setItem(key, JSON.stringify(1));
+        isAlert = true;
+        // setIsLogin(true);
+        if (dataDokter[i].roles === "nakes") {
+          tele("/daftar");
+          break;
+        } else {
+          tele("/dashboard");
+          break;
+        }
+      }
+    }
+    if (!isAlert) {
+      alert("Masukkan username atau password yang benar");
+    }
+  };
 
   useEffect(() => {}, [isLogin]);
 
