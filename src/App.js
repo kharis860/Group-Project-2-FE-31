@@ -9,6 +9,8 @@ import InnerDashboard from "./components/InnerDashboard";
 import RiwayatPenyakit from "./components/RiwayatPenyakit";
 import RekamMedis from "./components/RekamMedis";
 import Login from "./components/Login";
+import DaftarKonsultasi from "./components/DaftarKonsultasi";
+import Forbidden from "./components/Forbidden";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route path="riwayat" element={<RiwayatPenyakit />} />
         <Route path="rekam" element={<RekamMedis />} />
       </Route>
+      <Route path="/daftar" element={<DaftarKonsultasi />} />
+      <Route path="/error" element={<Forbidden />} />
     </Routes>
   );
 }

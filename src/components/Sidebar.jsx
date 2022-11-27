@@ -41,7 +41,6 @@ function Sidebar() {
         </div>
       </aside>
       {/* end sidebar */}
-      {/*end informasi*/}
     </div>
   );
 }
