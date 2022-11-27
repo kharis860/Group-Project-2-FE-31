@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { sendData } from "./Redux/action/dataAction";
 import { useEffect, useState } from "react";
 import { addId } from "./Redux/action/idAction";
+import { Navigate } from "react-router-dom";
 
 function DataPasien() {
   const tele = useNavigate();
@@ -16,7 +17,26 @@ function DataPasien() {
   const state = useSelector((state) => state.data);
   const stateId = useSelector((state) => state.id);
   const [filteredList, setFilteredList] = useState(state.pasien);
+  useEffect(() => {
+    dispatch(sendData());
+  }, []);
+  // start ambil data role guard
 
+  const user = localStorage.getItem("user");
+  // console.log(JSON.parse(user));
+  const users = JSON.parse(user);
+  console.log(users.roles);
+  // end ambil data role guard
+
+  // start role guard
+  if (users.roles === "nakes") {
+    console.log("anda tidak boleh masuk");
+    return <Navigate to="/error" />;
+    // tele("/error");
+  } else {
+    tele("/data");
+  }
+  // end role guard
   const handleSearch = (e) => {
     const inputSearch = e.target.value;
 
@@ -26,9 +46,6 @@ function DataPasien() {
     setFilteredList(updatedList);
   };
 
-  useEffect(() => {
-    dispatch(sendData());
-  }, []);
   return (
     <>
       <Navbar />

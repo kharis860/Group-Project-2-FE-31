@@ -3,21 +3,26 @@ import SidebarNakes from "./SidebarNakes";
 import "./DaftarKonsultasi.css";
 import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function DaftarKonsultasi() {
+  // start ambil data role guard
   const tele = useNavigate();
   const user = localStorage.getItem("user");
   // console.log(JSON.parse(user));
   const users = JSON.parse(user);
-  console.log(users.roles);
+  // end ambil data role guard
 
+  // start role guard
   if (users.roles === "dokter") {
-    tele("/daftar");
-    // <Navigate to="/error" />;
     console.log("anda tidak boleh masuk");
+    return <Navigate to="/error" />;
+    // tele("/error");
   } else {
-    tele("/error");
+    tele("/daftar");
   }
+  // end role guard
+  // useEffect(() => {}, []);
   return (
     <>
       <SidebarNakes />

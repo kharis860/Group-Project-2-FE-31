@@ -23,6 +23,7 @@ function Login() {
   // for (let i = 0; i < dataDokter.length; i++) {
   //   console.log(dataDokter[i]);
   // }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let isAlert = false;
@@ -32,6 +33,7 @@ function Login() {
         console.log(dataDokter[i]);
         const key = "user";
         localStorage.setItem(key, JSON.stringify(dataDokter[i]));
+
         // localStorage.setItem(key, JSON.stringify(1));
         isAlert = true;
         // setIsLogin(true);
