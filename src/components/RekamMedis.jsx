@@ -6,8 +6,11 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { sendData } from "./Redux/action/dataAction";
 import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function RekamMedis() {
+  const tele = useNavigate();
   const dispatch = useDispatch();
   const state = useSelector((state) => state.data);
   const stateId = useSelector((state) => state.id);
@@ -55,6 +58,21 @@ function RekamMedis() {
     setIsiObat("");
     setIsiCatatan("");
   };
+  // start ambil data role guard
+
+  const user = localStorage.getItem("user");
+  // console.log(JSON.parse(user));
+  const users = JSON.parse(user);
+  console.log(users.roles);
+  // end ambil data role guard
+
+  // start role guard
+  if (users.roles === "nakes") {
+    console.log("anda tidak boleh masuk");
+    return <Navigate to="/error" />;
+    // tele("/error");
+  }
+  // end role guard
   return (
     <div className="global">
       <Navbar />

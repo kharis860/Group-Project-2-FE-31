@@ -5,6 +5,7 @@ import { sendData } from "./Redux/action/dataAction";
 import { useEffect, useState } from "react";
 import { isDocument } from "@testing-library/user-event/dist/utils";
 import { addId } from "./Redux/action/idAction";
+import { Navigate } from "react-router-dom";
 
 function Konsultasi() {
   const tele = useNavigate();
@@ -34,6 +35,21 @@ function Konsultasi() {
   useEffect(() => {
     dispatch(sendData());
   }, []);
+  // start ambil data role guard
+
+  const user = localStorage.getItem("user");
+  // console.log(JSON.parse(user));
+  const users = JSON.parse(user);
+  console.log(users.roles);
+  // end ambil data role guard
+
+  // start role guard
+  if (users.roles === "nakes") {
+    console.log("anda tidak boleh masuk");
+    return <Navigate to="/error" />;
+    // tele("/error");
+  }
+  // end role guard
   return (
     <div className="global">
       <Navbar />
