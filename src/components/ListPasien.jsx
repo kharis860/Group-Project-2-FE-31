@@ -28,7 +28,7 @@ function ListPasien() {
     };
 
     const tambahPasien = (e) => {
-        tele("/tambahPasien");
+        tele("/tambah");
     };
 
     useEffect(() => {
