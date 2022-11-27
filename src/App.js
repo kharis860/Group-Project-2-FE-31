@@ -11,6 +11,8 @@ import RekamMedis from "./components/RekamMedis";
 import Login from "./components/Login";
 import DaftarKonsultasi from "./components/DaftarKonsultasi";
 import Forbidden from "./components/Forbidden";
+import ListPasienNakes from "./components/ListPasienNakes";
+import TambahPasienNakes from "./components/TambahPasienNakes";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         <Route path="rekam" element={<RekamMedis />} />
       </Route>
       <Route path="/daftar" element={<DaftarKonsultasi />} />
+      <Route path="/list" element={<ListPasienNakes />} />
+      <Route path="/tambah" element={<TambahPasienNakes />} />
       <Route path="/error" element={<Forbidden />} />
     </Routes>
   );
