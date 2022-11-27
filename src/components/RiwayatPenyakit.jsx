@@ -36,8 +36,6 @@ function RiwayatPenyakit() {
     console.log("anda tidak boleh masuk");
     return <Navigate to="/error" />;
     // tele("/error");
-  } else {
-    tele("/data");
   }
   // end role guard
   return (

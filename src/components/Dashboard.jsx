@@ -25,8 +25,6 @@ function Dashboard() {
     console.log("anda tidak boleh masuk");
     return <Navigate to="/error" />;
     // tele("/error");
-  } else {
-    tele("/dashboard");
   }
   // end role guard
 

@@ -11,6 +11,7 @@ function DaftarKonsultasi() {
   const user = localStorage.getItem("user");
   // console.log(JSON.parse(user));
   const users = JSON.parse(user);
+  console.log(users);
   // end ambil data role guard
 
   // start role guard

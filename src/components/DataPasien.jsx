@@ -20,6 +20,15 @@ function DataPasien() {
   useEffect(() => {
     dispatch(sendData());
   }, []);
+
+  const handleSearch = (e) => {
+    const inputSearch = e.target.value;
+
+    let updatedList = [...state.pasien];
+
+    updatedList = state.pasien.filter((o) => o.idPasien.includes(inputSearch) || o.namaLengkap.includes(inputSearch));
+    setFilteredList(updatedList);
+  };
   // start ambil data role guard
 
   const user = localStorage.getItem("user");
@@ -33,18 +42,8 @@ function DataPasien() {
     console.log("anda tidak boleh masuk");
     return <Navigate to="/error" />;
     // tele("/error");
-  } else {
-    tele("/data");
   }
   // end role guard
-  const handleSearch = (e) => {
-    const inputSearch = e.target.value;
-
-    let updatedList = [...state.pasien];
-
-    updatedList = state.pasien.filter((o) => o.idPasien.includes(inputSearch) || o.namaLengkap.includes(inputSearch));
-    setFilteredList(updatedList);
-  };
 
   return (
     <>
