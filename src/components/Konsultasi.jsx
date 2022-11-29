@@ -37,14 +37,14 @@ function Konsultasi() {
   }, []);
   // start ambil data role guard
 
-  const user = localStorage.getItem("user");
+  const user = localStorage.getItem("credentialLogin");
   // console.log(JSON.parse(user));
   const users = JSON.parse(user);
   console.log(users.roles);
   // end ambil data role guard
 
   // start role guard
-  if (users.roles === "nakes") {
+  if (users.role === "nakes") {
     console.log("anda tidak boleh masuk");
     return <Navigate to="/error" />;
     // tele("/error");
