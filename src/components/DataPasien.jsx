@@ -6,6 +6,7 @@ import { sendData } from "./Redux/action/dataAction";
 import { useEffect, useState } from "react";
 import { addId } from "./Redux/action/idAction";
 import { Navigate } from "react-router-dom";
+import axios from "axios";
 
 function DataPasien() {
   const tele = useNavigate();
@@ -19,6 +20,11 @@ function DataPasien() {
   const [filteredList, setFilteredList] = useState(state.pasien);
   useEffect(() => {
     dispatch(sendData());
+  }, []);
+  useEffect(() => {
+    axios.get("https://groupproject2-production.up.railway.app/pasien").then((response) => {
+      console.log(response);
+    });
   }, []);
 
   const handleSearch = (e) => {
