@@ -1,40 +1,33 @@
-import Sidebar from "./Sidebar";
+import SidebarNakes from "./SidebarNakes";
 import { Outlet } from "react-router-dom";
-import "../components/Dashboard.css";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import { sendData } from "./Redux/action/dataAction";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
-function Dashboard() {
-  const tele = useNavigate();
-  const dispatch = useDispatch();
-
+function DashboardNakes() {
+  // start ambil data role guard
   const user = localStorage.getItem("credentialLogin");
   // console.log(JSON.parse(user));
   const users = JSON.parse(user);
   useEffect(() => {
-    // console.log(users.role);
-    dispatch(sendData());
+    console.log(users);
   }, []);
-  console.log(users);
+
+  // end ambil data role guard
 
   // start role guard
-  if (users.role === "nakes") {
+  if (users.role === "dokter") {
     console.log("anda tidak boleh masuk");
     return <Navigate to="/error" />;
     // tele("/error");
   }
   // end role guard
-
   return (
     <div>
-      <Sidebar />
+      <SidebarNakes />
       <Outlet />
     </div>
   );
 }
 
-export default Dashboard;
+export default DashboardNakes;

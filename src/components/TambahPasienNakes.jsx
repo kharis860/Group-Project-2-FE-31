@@ -2,13 +2,13 @@ import "./TambahPasienNakes.css";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import { Navigate, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 function TambahPasienNakes() {
     // start ambil data role guard
     const tele = useNavigate();
-    const user = localStorage.getItem("user");
+    const user = localStorage.getItem("credentialLogin");
     const users = JSON.parse(user);
     // end ambil data role guard
 
@@ -71,7 +71,10 @@ function TambahPasienNakes() {
     };
 
     // start role guard
-    if (users.roles === "dokter") {
+    useEffect(() => {
+        console.log(users);
+    }, []);
+    if (users.role === "dokter") {
         console.log("anda tidak boleh masuk");
         return <Navigate to="/error" />;
         // tele("/error");

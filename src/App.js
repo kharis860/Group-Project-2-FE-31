@@ -13,6 +13,8 @@ import DaftarKonsultasi from "./components/DaftarKonsultasi";
 import Forbidden from "./components/Forbidden";
 import ListPasienNakes from "./components/ListPasienNakes";
 import TambahPasienNakes from "./components/TambahPasienNakes";
+import DashboardNakes from "./components/DashboardNakes";
+import InnerDashboardNakes from "./components/InnerDashboardNakes";
 
 function App() {
   return (
@@ -25,9 +27,12 @@ function App() {
         <Route path="riwayat" element={<RiwayatPenyakit />} />
         <Route path="rekam" element={<RekamMedis />} />
       </Route>
-      <Route path="/daftar" element={<DaftarKonsultasi />} />
-      <Route path="/list" element={<ListPasienNakes />} />
-      <Route path="/tambah" element={<TambahPasienNakes />} />
+      <Route path="/dashboardNakes" element={<DashboardNakes />}>
+        <Route index element={<InnerDashboardNakes />} />
+        <Route path="daftar" element={<DaftarKonsultasi />} />
+        <Route path="tambah" element={<TambahPasienNakes />} />
+        <Route path="list" element={<ListPasienNakes />} />
+      </Route>
       <Route path="/error" element={<Forbidden />} />
     </Routes>
   );
