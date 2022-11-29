@@ -1,8 +1,83 @@
 import "./TambahPasienNakes.css";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
 function TambahPasienNakes() {
+    // start ambil data role guard
+    const tele = useNavigate();
+    const user = localStorage.getItem("user");
+    const users = JSON.parse(user);
+    // end ambil data role guard
+
+    const [NIK, setNIK] = useState("");
+    const [nama, setNama] = useState("");
+    const [tglLahir, setTglLahir] = useState("");
+    const [telp, setTelp] = useState("");
+    const [pekerjaan, setPekerjaan] = useState("");
+    const [alamat, setAlamat] = useState("");
+    const [jenisKelamin, setJenisKelamin] = useState("");
+    const [alergiObat, setAlergiObat] = useState("");
+
+    // biar masukan cuman bisa angka
+    const handleNumberNIK = (e) => {
+        const re = e.target.value.replace(/\D/g, "");
+        setNIK(re);
+    };
+
+    const handleNumberTelp = (e) => {
+        const re = e.target.value.replace(/\D/g, "");
+        setTelp(re);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const postData = {
+            nik: NIK,
+            nama: nama,
+            jenis_kelamin: jenisKelamin,
+            tanggal_lahir: tglLahir,
+            alamat: alamat,
+            no_telp: telp,
+            alergi_obat: alergiObat,
+            pekerjaan: pekerjaan,
+        };
+
+        axios
+            .post("https://groupproject2-production.up.railway.app/pasien", postData, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            .then((res) => {
+                console.log(res);
+                alert("Data telah tersimpan");
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        setNIK("");
+        setNama("");
+        setTglLahir("");
+        setTelp("");
+        setPekerjaan("");
+        setAlamat("");
+        setJenisKelamin("");
+        setAlergiObat("");
+    };
+
+    // start role guard
+    if (users.roles === "dokter") {
+        console.log("anda tidak boleh masuk");
+        return <Navigate to="/error" />;
+        // tele("/error");
+    }
+    // end role guard
+
     return (
         <>
             <Sidebar />
@@ -19,8 +94,8 @@ function TambahPasienNakes() {
                         {/*END BARIS*/}
 
                         {/* Baris */}
-                        <div className="row form-con mb-3">
-                            <form className="form">
+                        <div className="row form-con">
+                            <form id="form" onSubmit={handleSubmit}>
                                 <div className="row rowForm m-0">
                                     {/* Bagian Kanan */}
                                     <div className="col leftForm p-3">
@@ -29,7 +104,7 @@ function TambahPasienNakes() {
                                                 NIK
                                             </label>
                                             <div className="col-sm-8">
-                                                <input type="number" name="inputNIK" id="inputNIK" placeholder="NIK" min={0} />
+                                                <input type="text" name="inputNIK" id="inputNIK" placeholder="NIK" min={0} value={NIK} onChange={handleNumberNIK} />
                                             </div>
                                         </div>
 
@@ -37,9 +112,8 @@ function TambahPasienNakes() {
                                             <label htmlFor="inputNama" className="col-sm-4 col-form-label">
                                                 Nama Lengkap
                                             </label>
-
                                             <div className="col-sm-8">
-                                                <input type="text" name="inputNama" id="inputNama" placeholder="Nama Lengkap" />
+                                                <input type="text" name="inputNama" id="inputNama" placeholder="Nama Lengkap" value={nama} onChange={(e) => setNama(e.target.value)} />
                                             </div>
                                         </div>
 
@@ -48,16 +122,16 @@ function TambahPasienNakes() {
                                                 Tanggal Lahir
                                             </label>
                                             <div className="col-sm-8">
-                                                <input type="date" name="inputTglLahir" id="inputTglLahir" />
+                                                <input type="date" name="inputTglLahir" id="inputTglLahir" value={tglLahir} onChange={(e) => setTglLahir(e.target.value)} />
                                             </div>
                                         </div>
 
                                         <div className="row mb-2 inputRow">
-                                            <label htmlFor="inputUmur" className="col-sm-4 col-form-label">
-                                                Umur
+                                            <label htmlFor="inputTelp" className="col-sm-4 col-form-label">
+                                                No Telepon
                                             </label>
                                             <div className="col-sm-8">
-                                                <input type="number" name="inputUmur" id="inputUmur" placeholder="Umur" min={0} />
+                                                <input type="text" name="inputTelp" id="inputTelp" placeholder="No Telepon" min={0} value={telp} onChange={handleNumberTelp} />
                                             </div>
                                         </div>
 
@@ -66,7 +140,7 @@ function TambahPasienNakes() {
                                                 Pekerjaan
                                             </label>
                                             <div className="col-sm-8">
-                                                <input type="text" name="inputPekerjaan" id="inputPekerjaan" placeholder="Pekerjaan" />
+                                                <input type="text" name="inputPekerjaan" id="inputPekerjaan" placeholder="Pekerjaan" value={pekerjaan} onChange={(e) => setPekerjaan(e.target.value)} />
                                             </div>
                                         </div>
 
@@ -75,7 +149,7 @@ function TambahPasienNakes() {
                                                 Alamat
                                             </label>
                                             <div className="col-sm-8">
-                                                <textarea name="inputAlamat" id="inputAlamat" placeholder="Alamat"></textarea>
+                                                <textarea name="inputAlamat" id="inputAlamat" placeholder="Alamat" value={alamat} onChange={(e) => setAlamat(e.target.value)}></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -88,8 +162,10 @@ function TambahPasienNakes() {
                                                 Jenis Kelamin
                                             </label>
                                             <div className="col-sm-8">
-                                                <select name="gender" id="gender" className="form-select">
-                                                    <option selected>Pilih Jenis Kelamin</option>
+                                                <select name="gender" id="gender" className="form-select" defaultValue={"DEFAULT"} onChange={(e) => setJenisKelamin(e.target.value)}>
+                                                    <option value="DEFAULT" disabled>
+                                                        Pilih Jenis Kelamin
+                                                    </option>
                                                     <option value="P">Perempuan</option>
                                                     <option value="L">Laki-Laki</option>
                                                 </select>
@@ -101,7 +177,7 @@ function TambahPasienNakes() {
                                                 Alergi Obat
                                             </label>
                                             <div className="col-sm-8">
-                                                <textarea name="inputAlergiObat" id="inputAlergiObat" placeholder="Alergi Obat" rows={5}></textarea>
+                                                <textarea name="inputAlergiObat" id="inputAlergiObat" placeholder="Alergi Obat" rows={5} value={alergiObat} onChange={(e) => setAlergiObat(e.target.value)}></textarea>
                                             </div>
                                         </div>
                                     </div>
