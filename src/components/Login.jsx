@@ -10,48 +10,94 @@ function Login() {
   const tele = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(false);
-  const [dataDokter, setDataDokter] = useState();
+  // const [isLogin, setIsLogin] = useState(false);
+  // const [dataDokter, setDataDokter] = useState();
 
-  useEffect(() => {
-    axios.get("https://rolenakes-production.up.railway.app/auth/register").then((response) => {
-      setDataDokter(response.data.data);
-      console.log(response.data.data);
-      console.log(dataDokter);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get("https://rolenakes-production.up.railway.app/auth/register").then((response) => {
+  //     setDataDokter(response.data.data);
+  //     console.log(response.data.data);
+  //     console.log(dataDokter);
+  //   });
+  // }, []);
   // for (let i = 0; i < dataDokter.length; i++) {
   //   console.log(dataDokter[i]);
   // }
 
+  // start handle button submit
+  // end handle button submit
   const handleSubmit = (e) => {
     e.preventDefault();
     let isAlert = false;
-    for (let i = 0; i < dataDokter.length; i++) {
-      // if (username === dataDokter[i].email && password === dataDokter[i].password) {
-      if (username === dataDokter[i].email) {
-        console.log(dataDokter[i]);
-        const key = "user";
-        localStorage.setItem(key, JSON.stringify(dataDokter[i]));
 
-        // localStorage.setItem(key, JSON.stringify(1));
-        isAlert = true;
-        // setIsLogin(true);
-        if (dataDokter[i].roles === "nakes") {
-          tele("/daftar");
-          break;
+    // start ambil data dari API
+    axios
+      .post(
+        "https://rolenakes-production.up.railway.app/auth/login",
+        { email: username, password: password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        // const token = res.data.token;
+        const credential = {
+          token: res.data.token,
+          uname: res.data.username,
+          email: res.data.email,
+          role: res.data.role,
+        };
+        localStorage.setItem("credentialLogin", JSON.stringify(credential));
+        if (res.data.role === "nakes") {
+          tele("/dashboardNakes");
+          // break;
         } else {
           tele("/dashboard");
-          break;
+          // break;
         }
-      }
-    }
-    if (!isAlert) {
-      alert("Masukkan username atau password yang benar");
-    }
+      });
+    // end ambil data dari API
+
+    // if (dataDokter[i].roles === "nakes") {
+    //   tele("/daftar");
+    //   // break;
+    // } else {
+    //   tele("/dashboard");
+    //   // break;
+    // }
+
+    // if (!isAlert) {
+    //   alert("Masukkan username atau password yang benar");
+    // }
+    ///////
+    // for (let i = 0; i < dataDokter.length; i++) {
+    //   // if (username === dataDokter[i].email && password === dataDokter[i].password) {
+    //   if (username === dataDokter[i].email) {
+    //     console.log(dataDokter[i]);
+    //     const key = "user";
+    //     localStorage.setItem(key, JSON.stringify(dataDokter[i]));
+
+    //     // localStorage.setItem(key, JSON.stringify(1));
+    //     isAlert = true;
+    //     // setIsLogin(true);
+    //     if (dataDokter[i].roles === "nakes") {
+    //       tele("/daftar");
+    //       break;
+    //     } else {
+    //       tele("/dashboard");
+    //       break;
+    //     }
+    //   }
+    // }
+    // if (!isAlert) {
+    //   alert("Masukkan username atau password yang benar");
+    // }
   };
 
-  useEffect(() => {}, [isLogin]);
+  // useEffect(() => {}, [isLogin]);
 
   return (
     <div id="login-bg">

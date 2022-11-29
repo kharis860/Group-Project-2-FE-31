@@ -8,25 +8,25 @@ import { useEffect } from "react";
 function DaftarKonsultasi() {
   // start ambil data role guard
   const tele = useNavigate();
-  const user = localStorage.getItem("user");
+  const user = localStorage.getItem("credentialLogin");
   // console.log(JSON.parse(user));
   const users = JSON.parse(user);
-  console.log(users);
+  useEffect(() => {
+    console.log(users);
+  }, []);
+
   // end ambil data role guard
 
   // start role guard
-  if (users.roles === "dokter") {
+  if (users.role === "dokter") {
     console.log("anda tidak boleh masuk");
     return <Navigate to="/error" />;
     // tele("/error");
-  } else {
-    tele("/daftar");
   }
   // end role guard
   // useEffect(() => {}, []);
   return (
     <>
-      <SidebarNakes />
       <Navbar />
       <div className="global">
         <section className="row ">
