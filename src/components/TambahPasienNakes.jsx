@@ -83,7 +83,6 @@ function TambahPasienNakes() {
 
     return (
         <>
-            <Sidebar />
             <Navbar />
             <div className="global">
                 <div className="row mx-3">
