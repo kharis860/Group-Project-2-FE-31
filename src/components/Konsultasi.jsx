@@ -9,19 +9,15 @@ import { Navigate } from "react-router-dom";
 
 function Konsultasi() {
   const tele = useNavigate();
-  function teleRekamMedis(index) {
+  function teleRekamMedis(index, id) {
     dispatch(addId(index));
-    tele("/dashboard/rekam");
+    tele("/dashboard/rekam/" + id);
   }
   const dispatch = useDispatch();
   const state = useSelector((state) => state.data);
   const stateId = useSelector((state) => state.id);
 
   const [filteredList, setFilteredList] = useState(state.pasien);
-  filteredList.map((item, index) => {
-    if (item.konsultasi == false) {
-    }
-  });
 
   const handleSearch = (e) => {
     const inputSearch = e.target.value;
@@ -31,6 +27,7 @@ function Konsultasi() {
     updatedList = state.pasien.filter((o) => o.idPasien.includes(inputSearch) || o.namaLengkap.includes(inputSearch));
     setFilteredList(updatedList);
   };
+  filteredList.map((item, index) => (item.status ? null : console.log(item.pasien)));
 
   useEffect(() => {
     dispatch(sendData());
@@ -96,7 +93,7 @@ function Konsultasi() {
                       Jenis Kelamin
                     </th>
                     <th scope="col" className="col-sm-1">
-                      Umur
+                      NIK
                     </th>
                     <th scope="col" className="col-sm-2">
                       Tanggal Lahir
@@ -107,16 +104,16 @@ function Konsultasi() {
 
                 <tbody className="table-body">
                   {filteredList.map((item, index) =>
-                    item.konsultasi ? null : (
-                      <tr key={item.id}>
+                    item.status ? null : (
+                      <tr key={index}>
                         <td scope="col">{index + 1}</td>
-                        <td scope="col">{item.idPasien}</td>
-                        <td scope="col">{item.namaLengkap}</td>
-                        <td scope="col">{item.jenisKelamin}</td>
-                        <td scope="col">{item.umur}</td>
-                        <td scope="col">{item.tanggalLahir}</td>
+                        <td scope="col">{item.pasien._id}</td>
+                        <td scope="col">{item.pasien.nama}</td>
+                        <td scope="col">{item.pasien.jenis_kelamin}</td>
+                        <td scope="col">{item.pasien.nik}</td>
+                        <td scope="col">{item.pasien.tanggal_lahir}</td>
                         <td scope="col">
-                          <button id="submit${i}" onClick={() => teleRekamMedis(index)} className="btn btn-sm" role="button">
+                          <button id="submit${i}" onClick={() => teleRekamMedis(index, item.pasien._id)} className="btn btn-sm" role="button">
                             <i className="material-icons" style={{ font_size: "15px" }}>
                               edit
                             </i>

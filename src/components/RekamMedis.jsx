@@ -6,17 +6,34 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { sendData } from "./Redux/action/dataAction";
 import { useEffect } from "react";
-import { Navigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, Navigate } from "react-router-dom";
 
 function RekamMedis() {
   const tele = useNavigate();
   const dispatch = useDispatch();
+  let { id } = useParams();
   const state = useSelector((state) => state.data);
   const stateId = useSelector((state) => state.id);
 
   useEffect(() => {
     dispatch(sendData());
+    const options = {
+      method: "GET",
+      url: "https://groupproject2-production.up.railway.app/pasien/" + id,
+      headers: { accept: "application/json" },
+    };
+
+    axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
+        setCleanDataPasien(response.data);
+        console.log(cleanDataPasien);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+    console.log(id);
   }, []);
 
   const [isiTanggal, setIsiTanggal] = useState("");
@@ -25,6 +42,8 @@ function RekamMedis() {
   const [isiObat, setIsiObat] = useState("");
   const [isiCatatan, setIsiCatatan] = useState("");
   const [tes, setTes] = useState([]);
+  const [cleanDataPasien, setCleanDataPasien] = useState({});
+
   useEffect(() => {
     axios.get("https://6350e03cdfe45bbd55b074ed.mockapi.io/medTechAPI/pasien/3").then((element) => {
       setTes(element.data);
@@ -66,6 +85,9 @@ function RekamMedis() {
   useEffect(() => {
     console.log(users.role);
   }, []);
+  useEffect(() => {
+    console.log(id);
+  }, []);
 
   // end ambil data role guard
 
@@ -76,6 +98,7 @@ function RekamMedis() {
     // tele("/error");
   }
   // end role guard
+
   return (
     <div className="global">
       <Navbar />
@@ -88,7 +111,50 @@ function RekamMedis() {
             <h1>Data Pasien</h1>
             <h6>Identitas Pasien</h6>
           </div>
-          {state.pasien
+          <div className="id-pasien">
+            <div className="isi-id">
+              <div className="mb-3">
+                <div className="p-2">
+                  <h5>NIK</h5>
+                  <p>{cleanDataPasien.nik}</p>
+                </div>
+                <div className="p-2">
+                  <h5>Jenis Kelamin</h5>
+                  <p>{cleanDataPasien.jenis_kelamin}</p>
+                </div>
+                <div className="p-2">
+                  <h5>Pekerjaan</h5>
+                  <p>{cleanDataPasien.pekerjaan}</p>
+                </div>
+              </div>
+              <div className="mb-3">
+                <div className="p-2">
+                  <h5>Nama Lengkap</h5>
+                  <p>{cleanDataPasien.nama}</p>
+                </div>
+                <div className="p-2">
+                  <h5>Tanggal lahir</h5>
+                  <p>{cleanDataPasien.tanggal_lahir}</p>
+                </div>
+                <div className="p-2">
+                  <h5>Alergi Obat</h5>
+                  <p>{cleanDataPasien.alergi_obat}</p>
+                </div>
+              </div>
+              <div className="mb-3">
+                <div className="p-2">
+                  <h5>Telepon</h5>
+                  <p>{cleanDataPasien.no_telp}</p>
+                </div>
+                <div className="p-2">
+                  <h5>Alamat</h5>
+                  <p>{cleanDataPasien.alamat}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* {state.pasien
             .filter((pasien) => pasien.id == stateId.id + 1)
             .map((item, index) => (
               <div className="id-pasien" key={index}>
@@ -138,7 +204,7 @@ function RekamMedis() {
                 </div>
               </div>
             ))}
-        </div>
+        </div> */}
         {/*end identitas pasien*/}
 
         {/* start akordion riwayat */}

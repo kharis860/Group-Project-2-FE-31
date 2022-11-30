@@ -12,7 +12,8 @@ function RiwayatPenyakit() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.data);
   const stateId = useSelector((state) => state.id);
-
+  console.log(state.pasien);
+  console.log(stateId.id);
   state.pasien
     .filter((pasien) => pasien.id == 1)
     .map((val, index) => {

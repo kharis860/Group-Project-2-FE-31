@@ -18,15 +18,44 @@ function DataPasien() {
   const state = useSelector((state) => state.data);
   const stateId = useSelector((state) => state.id);
   const [filteredList, setFilteredList] = useState(state.pasien);
+
+  console.log(state.pasien);
+  console.log(filteredList);
   useEffect(() => {
     dispatch(sendData());
   }, []);
-  useEffect(() => {
-    axios.get("https://groupproject2-production.up.railway.app/pasien").then((response) => {
-      console.log(response);
-    });
-  }, []);
 
+  // useEffect(() => {
+  //   axios.get("https://groupproject2-production.up.railway.app/konsultasi").then((response) => {
+  //     console.log(response.data);
+  //     response.data.map((item, index) => {
+  //       console.log(item);
+  //     });
+  //   });
+  //   // .then((response) => {
+  //   //   console.log(response);
+  //   // });
+  // }, []);
+
+  useEffect(() => {
+    const options = {
+      method: "GET",
+      url: "https://groupproject2-production.up.railway.app/konsultasi",
+      headers: { accept: "application/json" },
+    };
+
+    axios
+      .request(options)
+      .then(function (response) {
+        response.data.data.map((item, index) => {
+          console.log(item);
+        });
+        response.data.data.map((item, index) => (item.status ? console.log(item) : null));
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }, []);
   const handleSearch = (e) => {
     const inputSearch = e.target.value;
 
@@ -53,7 +82,7 @@ function DataPasien() {
     // tele("/error");
   }
   // end role guard
-
+  // formattedDate = new Date(item.pasien.tanggal_lahir).toLocaleDateString();
   return (
     <>
       <Navbar />
@@ -100,7 +129,7 @@ function DataPasien() {
                         Jenis Kelamin
                       </th>
                       <th scope="col" className="col-sm-1">
-                        Umur
+                        NIK
                       </th>
                       <th scope="col" className="col-sm-2">
                         Tanggal Lahir
@@ -112,16 +141,17 @@ function DataPasien() {
                     </tr>
                   </thead>
                   <tbody className="table-body">
+                    {/* {response.data.data.map((item, index) => (item.status ? console.log(item) : null))} */}
                     {filteredList.map((item, index) =>
-                      item.konsultasi ? (
+                      item.status ? (
                         <tr id="row" key={index}>
                           <td scope="col">{index + 1}</td>
-                          <td scope="col">{item.idPasien}</td>
-                          <td scope="col">{item.namaLengkap}</td>
-                          <td scope="col">{item.jenisKelamin}</td>
-                          <td scope="col">{item.umur}</td>
-                          <td scope="col">{item.tanggalLahir}</td>
-                          <td scope="col">{item.alamat}</td>
+                          <td scope="col">{item.pasien._id}</td>
+                          <td scope="col">{item.pasien.nama}</td>
+                          <td scope="col">{item.pasien.jenis_kelamin}</td>
+                          <td scope="col">{item.pasien.nik}</td>
+                          <td scope="col">{item.pasien.tanggal_lahir.split("T")[0]}</td>
+                          <td scope="col">{item.pasien.alamat}</td>
                           <td scope="col">
                             <button id="" className="btn btn-sm" role="button" onClick={() => teleRiwayat(index)}>
                               <i className="material-icons">zoom_in</i>
