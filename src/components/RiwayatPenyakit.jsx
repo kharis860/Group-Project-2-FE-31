@@ -45,6 +45,25 @@ function RiwayatPenyakit() {
     console.log(id);
   }, []);
 
+  useEffect(() => {
+    const options = {
+      method: "GET",
+      url: `https://groupproject2-production.up.railway.app/rekam?id_pasien=${id}`,
+      headers: { accept: "application/json" },
+    };
+
+    axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data.data);
+        setDataRiwayat(response.data.data);
+        console.log(dataRiwayat);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }, []);
+  const [dataRiwayat, setDataRiwayat] = useState([]);
   const [cleanDataRiwayat, setCleanDataRiwayat] = useState({});
   // start ambil data role guard
 
@@ -78,8 +97,8 @@ function RiwayatPenyakit() {
             <div className="isi-id">
               <div className="mb-3">
                 <div className="p-2">
-                  <h5>NIK</h5>
-                  <p>{cleanDataRiwayat.nik}</p>
+                  <h5>ID Pasien</h5>
+                  <p>{cleanDataRiwayat._id}</p>
                 </div>
                 <div className="p-2">
                   <h5>Jenis Kelamin</h5>
@@ -106,12 +125,16 @@ function RiwayatPenyakit() {
               </div>
               <div className="mb-3">
                 <div className="p-2">
-                  <h5>Telepon</h5>
-                  <p>{cleanDataRiwayat.no_telp}</p>
+                  <h5>NIK</h5>
+                  <p>{cleanDataRiwayat.nik}</p>
                 </div>
                 <div className="p-2">
                   <h5>Alamat</h5>
                   <p>{cleanDataRiwayat.alamat}</p>
+                </div>
+                <div className="p-2">
+                  <h5>Telepon</h5>
+                  <p>{cleanDataRiwayat.no_telp}</p>
                 </div>
               </div>
             </div>
@@ -121,53 +144,49 @@ function RiwayatPenyakit() {
         <div className="riwayat">
           <div className="head-isi">
             <h1>Riwayat Penyakit</h1>
-            {state.pasien
-              .filter((pasien) => pasien.id == stateId.id + 1)
-              .map((item, index) => (
-                <div>
-                  <div className="akord-riwayat" key={index}>
-                    {/*codingan bootstrap */}
-                    <Accordion defaultActiveKey={index}>
-                      {item.riwayatPenyakit.map((itemm, indexx) => (
-                        <Accordion.Item eventKey={indexx} key={indexx}>
-                          <Accordion.Header>Periksa {indexx + 1}</Accordion.Header>
-                          <Accordion.Body key={indexx}>
-                            <div>
-                              <ul>
-                                <li>
-                                  <h5>Tanggal Periksa</h5>
-                                </li>
-                                <h6>{itemm.tanggalBerobat}</h6>
-                                <li>
-                                  <h5>Anamnesis</h5>
-                                </li>
-                                <h6>{itemm.anamnesis}</h6>
-                                <li>
-                                  <h5>Diagnosa</h5>
-                                </li>
-                                <h6>{itemm.diagnosis}</h6>
-                              </ul>
-                            </div>
-                            <div>
-                              <ul>
-                                <li>
-                                  <h5>Obat</h5>
-                                </li>
-                                <h6>{itemm.obat}</h6>
-                                <li>
-                                  <h5>Catatan</h5>
-                                </li>
-                                <h6>{itemm.catatan}</h6>
-                              </ul>
-                            </div>
-                          </Accordion.Body>
-                        </Accordion.Item>
-                      ))}
-                    </Accordion>
-                    {/*end codingan bootstrap*/}
-                  </div>
+            {dataRiwayat.map((item, index) => (
+              <div>
+                <div className="akord-riwayat" key={index}>
+                  {/*codingan bootstrap */}
+                  <Accordion defaultActiveKey={index}>
+                    <Accordion.Item eventKey={index} key={index}>
+                      <Accordion.Header>Periksa {index + 1}</Accordion.Header>
+                      <Accordion.Body key={index}>
+                        <div>
+                          <ul>
+                            <li>
+                              <h5>Tanggal Periksa</h5>
+                            </li>
+                            <h6>{item.tanggal_rekam}</h6>
+                            <li>
+                              <h5>Anamnesis</h5>
+                            </li>
+                            <h6>{item.anamnesis}</h6>
+                            <li>
+                              <h5>Diagnosa</h5>
+                            </li>
+                            <h6>{item.diagnosis}</h6>
+                          </ul>
+                        </div>
+                        <div>
+                          <ul>
+                            <li>
+                              <h5>Obat</h5>
+                            </li>
+                            <h6>{item.obat}</h6>
+                            <li>
+                              <h5>Catatan</h5>
+                            </li>
+                            {/* <h6>{item.catatan}</h6> */}
+                          </ul>
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
+                  {/*end codingan bootstrap*/}
                 </div>
-              ))}
+              </div>
+            ))}
           </div>
 
           {/*end riwayat penyakit*/}

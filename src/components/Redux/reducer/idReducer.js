@@ -9,7 +9,7 @@ function idReducer(state = initialState, action) {
     case ADDID:
       return {
         ...state,
-        id: action.index,
+        id: action.idKonsul,
       };
 
     default:

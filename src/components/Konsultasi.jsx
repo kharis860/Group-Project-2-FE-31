@@ -9,9 +9,11 @@ import { Navigate } from "react-router-dom";
 
 function Konsultasi() {
   const tele = useNavigate();
-  function teleRekamMedis(index, id) {
-    dispatch(addId(index));
+  function teleRekamMedis(idKonsul, id) {
+    dispatch(addId(idKonsul));
     tele("/dashboard/rekam/" + id);
+
+    // localStorage.setItem("credentialConsultasi", JSON.stringify(credential));
   }
   const dispatch = useDispatch();
   const state = useSelector((state) => state.data);
@@ -113,7 +115,7 @@ function Konsultasi() {
                         <td scope="col">{item.pasien.no_telp}</td>
                         <td scope="col">{item.pasien.tanggal_lahir.split("T")[0]}</td>
                         <td scope="col">
-                          <button id="submit${i}" onClick={() => teleRekamMedis(index, item.pasien._id)} className="btn btn-sm" role="button">
+                          <button id="submit${i}" onClick={() => teleRekamMedis(item._id, item.pasien._id)} className="btn btn-sm" role="button">
                             <i className="material-icons" style={{ font_size: "15px" }}>
                               edit
                             </i>

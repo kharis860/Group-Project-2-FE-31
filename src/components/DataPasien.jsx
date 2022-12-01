@@ -128,9 +128,6 @@ function DataPasien() {
                       <th scope="col" className="col-sm-1">
                         Jenis Kelamin
                       </th>
-                      <th scope="col" className="col-sm-1">
-                        Telepon
-                      </th>
                       <th scope="col" className="col-sm-2">
                         Tanggal Lahir
                       </th>
@@ -149,7 +146,6 @@ function DataPasien() {
                           <td scope="col">{item.pasien.nik}</td>
                           <td scope="col">{item.pasien.nama}</td>
                           <td scope="col">{item.pasien.jenis_kelamin}</td>
-                          <td scope="col">{item.pasien.no_telp}</td>
                           <td scope="col">{item.pasien.tanggal_lahir.split("T")[0]}</td>
                           <td scope="col">{item.pasien.alamat}</td>
                           <td scope="col">

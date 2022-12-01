@@ -14,6 +14,8 @@ function RekamMedis() {
   let { id } = useParams();
   const state = useSelector((state) => state.data);
   const stateId = useSelector((state) => state.id);
+  console.log(state.pasien);
+  console.log(stateId.id);
 
   useEffect(() => {
     dispatch(sendData());
@@ -41,19 +43,13 @@ function RekamMedis() {
   const [isiDiagnosis, setIsiDiagnosis] = useState("");
   const [isiObat, setIsiObat] = useState("");
   const [isiCatatan, setIsiCatatan] = useState("");
-  const [tes, setTes] = useState([]);
   const [cleanDataPasien, setCleanDataPasien] = useState({});
-
-  useEffect(() => {
-    axios.get("https://6350e03cdfe45bbd55b074ed.mockapi.io/medTechAPI/pasien/3").then((element) => {
-      setTes(element.data);
-    });
-  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const postData = {
-      tanggalBerobat: isiTanggal,
+      konsultasi: stateId.id,
+      pasien: id,
       anamnesis: isiAnamnesis,
       diagnosis: isiDiagnosis,
       obat: isiObat,
@@ -62,7 +58,7 @@ function RekamMedis() {
 
     axios
 
-      .post(`https://6350e03cdfe45bbd55b074ed.mockapi.io/medTechAPI/pasien/3`, postData)
+      .post(`https://groupproject2-production.up.railway.app/rekam`, postData)
 
       .then((res) => {
         console.log(res);
@@ -76,7 +72,30 @@ function RekamMedis() {
     setIsiDiagnosis("");
     setIsiObat("");
     setIsiCatatan("");
+
+    const editStatus = { status: true };
+
+    // mengupdate data menjadi true
+    axios.patch(`https://groupproject2-production.up.railway.app/konsultasi/${stateId.id}`, editStatus).then((res) => {
+      console.log(res);
+    });
   };
+  //   const options = {
+  //     method: "PATCH",
+  //     url: `https://groupproject2-production.up.railway.app/konsultasi/${stateId.id}`,
+  //     headers: { accept: "application/json", "content-type": "application/json" },
+  //     data: { status: true },
+  //   };
+
+  //   axios
+  //     .request(options)
+  //     .then(function (response) {
+  //       console.log(response.data);
+  //     })
+  //     .catch(function (error) {
+  //       console.error(error);
+  //     });
+  // };
   // start ambil data role guard
 
   const user = localStorage.getItem("credentialLogin");
@@ -115,8 +134,8 @@ function RekamMedis() {
             <div className="isi-id">
               <div className="mb-3">
                 <div className="p-2">
-                  <h5>NIK</h5>
-                  <p>{cleanDataPasien.nik}</p>
+                  <h5>ID Pasien</h5>
+                  <p>{cleanDataPasien._id}</p>
                 </div>
                 <div className="p-2">
                   <h5>Jenis Kelamin</h5>
@@ -143,12 +162,16 @@ function RekamMedis() {
               </div>
               <div className="mb-3">
                 <div className="p-2">
-                  <h5>Telepon</h5>
-                  <p>{cleanDataPasien.no_telp}</p>
+                  <h5>NIK</h5>
+                  <p>{cleanDataPasien.nik}</p>
                 </div>
                 <div className="p-2">
                   <h5>Alamat</h5>
                   <p>{cleanDataPasien.alamat}</p>
+                </div>
+                <div className="p-2">
+                  <h5>Telepon</h5>
+                  <p>{cleanDataPasien.no_telp}</p>
                 </div>
               </div>
             </div>
@@ -267,12 +290,6 @@ function RekamMedis() {
         <div className="rekam">
           <div className="head-rekam">
             <h1>Isi Rekam Medis</h1>
-          </div>
-          <div className="date">
-            <form onSubmit={handleSubmit}>
-              <label>Tanggal periksa</label>
-              <input type="text" value={isiTanggal} onChange={(e) => setIsiTanggal(e.target.value)} id="isiTanggal" placeholder="19 agustus 2021" />
-            </form>
           </div>
           <div className="form-rekam">
             <form id="tArea" onSubmit={handleSubmit}>
