@@ -1,17 +1,15 @@
 import "./TambahPasienNakes.css";
 import Navbar from "./Navbar";
-import Sidebar from "./Sidebar";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 function TambahPasienNakes() {
-    // start ambil data role guard
-    const tele = useNavigate();
+    // ======================= STATE =====================
+    // role guard
     const user = localStorage.getItem("credentialLogin");
     const users = JSON.parse(user);
-    // end ambil data role guard
-
+    // form state
     const [NIK, setNIK] = useState("");
     const [nama, setNama] = useState("");
     const [tglLahir, setTglLahir] = useState("");
@@ -21,17 +19,20 @@ function TambahPasienNakes() {
     const [jenisKelamin, setJenisKelamin] = useState("");
     const [alergiObat, setAlergiObat] = useState("");
 
-    // biar masukan cuman bisa angka
+    // ================ HANDLE FUNCTION ====================
+    // Input just for number func
     const handleNumberNIK = (e) => {
         const re = e.target.value.replace(/\D/g, "");
         setNIK(re);
     };
 
+    // Input just for number func
     const handleNumberTelp = (e) => {
         const re = e.target.value.replace(/\D/g, "");
         setTelp(re);
     };
 
+    // submit form handle
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -60,6 +61,11 @@ function TambahPasienNakes() {
                 console.log(err);
             });
 
+        handleReset();
+    };
+
+    // reset form handle
+    const handleReset = () => {
         setNIK("");
         setNama("");
         setTglLahir("");
@@ -70,16 +76,11 @@ function TambahPasienNakes() {
         setAlergiObat("");
     };
 
-    // start role guard
-    useEffect(() => {
-        console.log(users);
-    }, []);
+    // role guard
     if (users.role === "dokter") {
         console.log("anda tidak boleh masuk");
         return <Navigate to="/error" />;
-        // tele("/error");
     }
-    // end role guard
 
     return (
         <>
@@ -106,7 +107,7 @@ function TambahPasienNakes() {
                                                 NIK
                                             </label>
                                             <div className="col-sm-8">
-                                                <input type="text" name="inputNIK" id="inputNIK" placeholder="NIK" min={0} value={NIK} onChange={handleNumberNIK} />
+                                                <input type="text" name="inputNIK" id="inputNIK" placeholder="NIK" min={0} value={NIK} onChange={handleNumberNIK} maxLength={16} />
                                             </div>
                                         </div>
 
@@ -133,7 +134,7 @@ function TambahPasienNakes() {
                                                 No Telepon
                                             </label>
                                             <div className="col-sm-8">
-                                                <input type="text" name="inputTelp" id="inputTelp" placeholder="No Telepon" min={0} value={telp} onChange={handleNumberTelp} />
+                                                <input type="text" name="inputTelp" id="inputTelp" placeholder="No Telepon" min={0} value={telp} onChange={handleNumberTelp} maxLength={12} />
                                             </div>
                                         </div>
 
@@ -164,12 +165,10 @@ function TambahPasienNakes() {
                                                 Jenis Kelamin
                                             </label>
                                             <div className="col-sm-8">
-                                                <select name="gender" id="gender" className="form-select" defaultValue={"DEFAULT"} onChange={(e) => setJenisKelamin(e.target.value)}>
-                                                    <option value="DEFAULT" disabled>
-                                                        Pilih Jenis Kelamin
-                                                    </option>
-                                                    <option value="P">Perempuan</option>
-                                                    <option value="L">Laki-Laki</option>
+                                                <select name="gender" id="gender" className="form-select" onChange={(e) => setJenisKelamin(e.target.value)} value={jenisKelamin}>
+                                                    <option>Pilih Jenis Kelamin</option>
+                                                    <option value="Perempuan">Perempuan</option>
+                                                    <option value="Laki-laki">Laki-Laki</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -189,7 +188,7 @@ function TambahPasienNakes() {
                                             <button id="submitTambahPasien" type="submit">
                                                 Simpan
                                             </button>
-                                            <button id="submitReset" type="reset">
+                                            <button id="submitReset" onClick={handleReset}>
                                                 Reset
                                             </button>
                                         </div>
