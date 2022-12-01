@@ -1,57 +1,65 @@
-// import "./ListPasien.css";
 import Navbar from "./Navbar";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { sendData } from "./Redux/action/dataAction";
 import { useEffect, useState } from "react";
-import { addId } from "./Redux/action/idAction";
 import { Navigate } from "react-router-dom";
+import axios from "axios";
+import ModalDataPasien from "./ModalDataPasien";
 
 function ListPasienNakes() {
+    // ============================ STATE ===============
     const tele = useNavigate();
-    function teleRiwayat(index) {
-        dispatch(addId(index));
-        tele("/dashboard/riwayat");
-    }
-    const dispatch = useDispatch();
-    const state = useSelector((state) => state.data);
-    const stateId = useSelector((state) => state.id);
-    const [filteredList, setFilteredList] = useState(state.pasien);
-
-    // start ambil data role guard
+    // Modal
+    const [modalShow, setModalShow] = useState(false);
+    const [modalState, setModalState] = useState({});
+    // Data Table
+    const [APIData, setAPIData] = useState([]);
+    const [filteredList, setFilteredList] = useState([]);
+    const [inputSearch, setInputSearch] = useState("");
+    // Role Guard
     const user = localStorage.getItem("credentialLogin");
-    // console.log(JSON.parse(user));
     const users = JSON.parse(user);
+
+    // ====================== USE EFFECT ===============
+    // Get Data Pasien
     useEffect(() => {
-        console.log(users);
+        axios
+            .get("https://groupproject2-production.up.railway.app/pasien")
+            .then((res) => {
+                setAPIData(res.data.data);
+                // console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }, []);
 
-    // end ambil data role guard
-
-    const handleSearch = (e) => {
-        const inputSearch = e.target.value;
-
-        let updatedList = [...state.pasien];
-
-        updatedList = state.pasien.filter((o) => o.idPasien.includes(inputSearch) || o.namaLengkap.includes(inputSearch));
-        setFilteredList(updatedList);
-    };
-
+    // =============== HANDLE FUNCTION ====================
+    // navigation of button Tambah Pasien
     const tambahPasien = (e) => {
         tele("/dashboardNakes/tambah");
     };
 
-    useEffect(() => {
-        dispatch(sendData());
-    }, []);
+    // search handle
+    const handleSearch = (searchValue) => {
+        setInputSearch(searchValue);
 
-    // start role guard
+        if (inputSearch !== "") {
+            const filteredData = APIData.filter((item) => {
+                return Object.values(item.nama).join("").toLowerCase().includes(searchValue.toLowerCase());
+            });
+            setFilteredList(filteredData);
+        } else {
+            setFilteredList(APIData);
+        }
+    };
+
+    // role guard
     if (users.role === "dokter") {
         console.log("anda tidak boleh masuk");
         return <Navigate to="/error" />;
         // tele("/error");
     }
-    // end role guard
+
     return (
         <>
             <Navbar />
@@ -80,7 +88,7 @@ function ListPasienNakes() {
                             <div className="col-3"></div>
                             <div className="col-6">
                                 <div className="input-group flex-nowrap">
-                                    <input type="text" onChange={handleSearch} className="form-control" placeholder="Cari berdasarkan ID Pasien atau Nama" id="inputSearch" />
+                                    <input type="text" onChange={(e) => handleSearch(e.target.value)} className="form-control" placeholder="Cari berdasarkan ID Pasien atau Nama" id="inputSearch" />
                                     <span className="input-group-text" id="icon-search">
                                         {" "}
                                         <i className="material-icons">search</i>
@@ -100,44 +108,80 @@ function ListPasienNakes() {
                                                 No
                                             </th>
                                             <th scope="col" className="col-sm-1">
-                                                ID Pasien
+                                                NIK
                                             </th>
                                             <th scope="col">Nama Pasien</th>
                                             <th scope="col" className="col-sm-1">
                                                 Jenis Kelamin
                                             </th>
                                             <th scope="col" className="col-sm-1">
-                                                Umur
-                                            </th>
-                                            <th scope="col" className="col-sm-2">
                                                 Tanggal Lahir
                                             </th>
                                             <th scope="col" className="col-sm-2">
                                                 Alamat
                                             </th>
+                                            <th scope="col" className="col-sm-1">
+                                                No. Telp
+                                            </th>
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody className="table-body">
-                                        {filteredList.map((item, index) =>
-                                            item.konsultasi ? (
-                                                <tr id="row" key={index}>
-                                                    <td scope="col">{index + 1}</td>
-                                                    <td scope="col">{item.idPasien}</td>
-                                                    <td scope="col">{item.namaLengkap}</td>
-                                                    <td scope="col">{item.jenisKelamin}</td>
-                                                    <td scope="col">{item.umur}</td>
-                                                    <td scope="col">{item.tanggalLahir}</td>
-                                                    <td scope="col">{item.alamat}</td>
-                                                    <td scope="col">
-                                                        <button id="" className="btn btn-sm" role="button" onClick={() => teleRiwayat(index)}>
-                                                            <i className="material-icons">zoom_in</i>
-                                                            Lihat
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            ) : null
-                                        )}
+                                        {inputSearch.length > 1
+                                            ? filteredList.map((item, index) => {
+                                                  return (
+                                                      <tr id="row" key={index}>
+                                                          <td scope="col">{index + 1}</td>
+                                                          <td scope="col">{item.nik}</td>
+                                                          <td scope="col">{item.nama}</td>
+                                                          <td scope="col">{item.jenis_kelamin}</td>
+                                                          <td scope="col">{item.tanggal_lahir.split("T")[0]}</td>
+                                                          <td scope="col">{item.alamat}</td>
+                                                          <td scope="col">{item.no_telp}</td>
+                                                          <td scope="col">
+                                                              <button
+                                                                  id=""
+                                                                  className="btn btn-sm"
+                                                                  role="button"
+                                                                  onClick={() => {
+                                                                      setModalShow(true);
+                                                                  }}
+                                                              >
+                                                                  <i className="material-icons">zoom_in</i>
+                                                                  Lihat
+                                                              </button>
+                                                          </td>
+                                                      </tr>
+                                                  );
+                                              })
+                                            : APIData.map((item, index) => {
+                                                  return (
+                                                      <tr id="row" key={index}>
+                                                          <td scope="col">{index + 1}</td>
+                                                          <td scope="col">{item.nik}</td>
+                                                          <td scope="col">{item.nama}</td>
+                                                          <td scope="col">{item.jenis_kelamin}</td>
+                                                          <td scope="col">{item.tanggal_lahir.split("T")[0]}</td>
+                                                          <td scope="col">{item.alamat}</td>
+                                                          <td scope="col">{item.no_telp}</td>
+                                                          <td scope="col">
+                                                              <button
+                                                                  id=""
+                                                                  className="btn btn-sm"
+                                                                  role="button"
+                                                                  onClick={() => {
+                                                                      setModalState(item);
+                                                                      setModalShow(true);
+                                                                  }}
+                                                              >
+                                                                  <i className="material-icons">zoom_in</i>
+                                                                  Lihat
+                                                              </button>
+                                                          </td>
+                                                      </tr>
+                                                  );
+                                              })}
+                                        {modalShow ? <ModalDataPasien show={modalShow} onHide={() => setModalShow(false)} data={modalState} /> : null}
                                     </tbody>
                                 </table>
                             </div>
