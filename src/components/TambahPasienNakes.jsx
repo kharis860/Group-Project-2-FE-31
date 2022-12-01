@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Button, Col, Container, Form, FormGroup, Row } from "react-bootstrap";
 
 function TambahPasienNakes() {
     // ======================= STATE =====================
@@ -86,8 +87,8 @@ function TambahPasienNakes() {
         <>
             <Navbar />
             <div className="global">
-                <div className="row mx-3">
-                    <div className="container-sm">
+                <div className="row mx-3 ">
+                    <div className="container-sm mb-2">
                         {/* BARIS*/}
                         <div className="row">
                             <div className="col-md">
@@ -97,105 +98,64 @@ function TambahPasienNakes() {
                         {/*END BARIS*/}
 
                         {/* Baris */}
-                        <div className="row form-con">
-                            <form id="form" onSubmit={handleSubmit}>
-                                <div className="row rowForm m-0">
-                                    {/* Bagian Kanan */}
-                                    <div className="col leftForm p-3">
-                                        <div className="row mb-2 inputRow">
-                                            <label htmlFor="inputNIK" className="col-sm-4 col-form-label">
-                                                NIK
-                                            </label>
-                                            <div className="col-sm-8">
-                                                <input type="text" name="inputNIK" id="inputNIK" placeholder="NIK" min={0} value={NIK} onChange={handleNumberNIK} maxLength={16} />
-                                            </div>
-                                        </div>
-
-                                        <div className="row mb-2 inputRow">
-                                            <label htmlFor="inputNama" className="col-sm-4 col-form-label">
-                                                Nama Lengkap
-                                            </label>
-                                            <div className="col-sm-8">
-                                                <input type="text" name="inputNama" id="inputNama" placeholder="Nama Lengkap" value={nama} onChange={(e) => setNama(e.target.value)} />
-                                            </div>
-                                        </div>
-
-                                        <div className="row mb-2 inputRow">
-                                            <label htmlFor="inputTglLahir" className="col-sm-4 col-form-label">
-                                                Tanggal Lahir
-                                            </label>
-                                            <div className="col-sm-8">
-                                                <input type="date" name="inputTglLahir" id="inputTglLahir" value={tglLahir} onChange={(e) => setTglLahir(e.target.value)} />
-                                            </div>
-                                        </div>
-
-                                        <div className="row mb-2 inputRow">
-                                            <label htmlFor="inputTelp" className="col-sm-4 col-form-label">
-                                                No Telepon
-                                            </label>
-                                            <div className="col-sm-8">
-                                                <input type="text" name="inputTelp" id="inputTelp" placeholder="No Telepon" min={0} value={telp} onChange={handleNumberTelp} maxLength={12} />
-                                            </div>
-                                        </div>
-
-                                        <div className="row mb-2 inputRow">
-                                            <label htmlFor="inputPekerjaan" className="col-sm-4 col-form-label">
-                                                Pekerjaan
-                                            </label>
-                                            <div className="col-sm-8">
-                                                <input type="text" name="inputPekerjaan" id="inputPekerjaan" placeholder="Pekerjaan" value={pekerjaan} onChange={(e) => setPekerjaan(e.target.value)} />
-                                            </div>
-                                        </div>
-
-                                        <div className="row mb-2 inputRow">
-                                            <label htmlFor="inputAlamat" className="col-sm-4 col-form-label">
-                                                Alamat
-                                            </label>
-                                            <div className="col-sm-8">
-                                                <textarea name="inputAlamat" id="inputAlamat" placeholder="Alamat" value={alamat} onChange={(e) => setAlamat(e.target.value)}></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* End Bagian kanan */}
-
-                                    {/* Bagian kiri */}
-                                    <div className="col rightForm p-3">
-                                        <div className="row mb-2 inputRow">
-                                            <label htmlFor="gender" className="col-sm-4 col-form-label">
-                                                Jenis Kelamin
-                                            </label>
-                                            <div className="col-sm-8">
-                                                <select name="gender" id="gender" className="form-select" onChange={(e) => setJenisKelamin(e.target.value)} value={jenisKelamin}>
-                                                    <option>Pilih Jenis Kelamin</option>
-                                                    <option value="Perempuan">Perempuan</option>
-                                                    <option value="Laki-laki">Laki-Laki</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div className="row mb-2 inputRow">
-                                            <label htmlFor="inputAlergiObat" className="col-sm-4 col-form-label">
-                                                Alergi Obat
-                                            </label>
-                                            <div className="col-sm-8">
-                                                <textarea name="inputAlergiObat" id="inputAlergiObat" placeholder="Alergi Obat" rows={5} value={alergiObat} onChange={(e) => setAlergiObat(e.target.value)}></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* end bagian kiri */}
-                                    <div className="row buttonRow m-0 mb-3">
-                                        <div className="col">
-                                            <button id="submitTambahPasien" type="submit">
-                                                Simpan
-                                            </button>
-                                            <button id="submitReset" onClick={handleReset}>
-                                                Reset
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                        <Form id="form" className="mt-3 ms-3 pb-3 pe-3" onSubmit={handleSubmit} style={{ border: "1px solid black", boxShadow: "1px 1px 5px black" }}>
+                            <Row>
+                                {/* KOLOM 1 */}
+                                <Col className="colLeft">
+                                    <Form.Group className="mb-3">
+                                        <Form.Label className="formLabel">NIK</Form.Label>
+                                        <Form.Control type="text" name="inputNIK" className="inputForm" placeholder="Masukkan 16 digit angka NIK" min={0} value={NIK} onChange={handleNumberNIK} maxLength={16} />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label className="formLabel">Nama Lengkap</Form.Label>
+                                        <Form.Control type="text" name="inputNama" className="inputForm" placeholder="Nama Lengkap" min={0} value={nama} onChange={(e) => setNama(e.target.value)} />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label className="formLabel">Tanggal Lahir</Form.Label>
+                                        <Form.Control type="date" name="inputTglLahir" className="inputForm" value={tglLahir} onChange={(e) => setTglLahir(e.target.value)} />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label className="formLabel">Jenis Kelamin</Form.Label>
+                                        <Form.Select name="gender" className="inputForm" onChange={(e) => setJenisKelamin(e.target.value)} value={jenisKelamin}>
+                                            <option>Pilih Jenis Kelamin</option>
+                                            <option value="Perempuan">Perempuan</option>
+                                            <option value="Laki-laki">Laki-Laki</option>
+                                        </Form.Select>
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label className="formLabel">Pekerjaan</Form.Label>
+                                        <Form.Control type="text" name="inputPekerjaan" className="inputForm" placeholder="Pekerjaan" value={pekerjaan} onChange={(e) => setPekerjaan(e.target.value)} />
+                                    </Form.Group>
+                                </Col>
+                                {/* KOLOM 2 */}
+                                <Col className=" colRight me-3">
+                                    <Form.Group className="mb-3">
+                                        <Form.Label className="formLabel">Alamat</Form.Label>
+                                        <Form.Control as={"textarea"} name="inputAlamat" className="inputForm" placeholder="Alamat" value={alamat} onChange={(e) => setAlamat(e.target.value)} />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label className="formLabel">No Telpon</Form.Label>
+                                        <Form.Control type="text" name="inputTelp" className="inputForm" placeholder="No Telepon" min={0} value={telp} onChange={handleNumberTelp} maxLength={12} />
+                                        <Form.Text className="text-muted fst-italic">max 12 digit angka, ex. 08XXXXXXXXXX</Form.Text>
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label className="formLabel">Alergi Obat</Form.Label>
+                                        <Form.Control as={"textarea"} name="inputAlergiObat" className="inputForm" placeholder="Alergi Obat" rows={3} value={alergiObat} onChange={(e) => setAlergiObat(e.target.value)} />
+                                        <Form.Text className="text-muted fst-italic">isi dengan tanda strip (-) jika tidak memiliki alergi</Form.Text>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="d-grid gap-2 d-md-flex justify-content-md-end buttonRow">
+                                    <Button id="submitTambahPasien" type="submit">
+                                        Simpan
+                                    </Button>
+                                    <Button id="submitReset" type="reset" onClick={handleReset}>
+                                        Reset
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </Form>
                         {/* END Baris */}
                     </div>
                 </div>

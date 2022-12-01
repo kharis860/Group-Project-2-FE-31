@@ -104,17 +104,17 @@ function ListPasienNakes() {
                                 <table className="table table-striped table-hover table-bordered table-md text-center vertical-align: middle;">
                                     <thead>
                                         <tr>
-                                            <th scope="col" className="col-sm-1">
+                                            <th scope="col" className="col-sm-0">
                                                 No
                                             </th>
                                             <th scope="col" className="col-sm-1">
                                                 NIK
                                             </th>
-                                            <th scope="col">Nama Pasien</th>
+                                            <th scope="col-sm-2">Nama Pasien</th>
                                             <th scope="col" className="col-sm-1">
                                                 Jenis Kelamin
                                             </th>
-                                            <th scope="col" className="col-sm-1">
+                                            <th scope="col" className="col-sm-2">
                                                 Tanggal Lahir
                                             </th>
                                             <th scope="col" className="col-sm-2">
@@ -134,7 +134,8 @@ function ListPasienNakes() {
                                                           <td scope="col">{index + 1}</td>
                                                           <td scope="col">{item.nik}</td>
                                                           <td scope="col">{item.nama}</td>
-                                                          <td scope="col">{item.jenis_kelamin}</td>
+                                                          {item.jenis_kelamin === "perempuan" ? <td scope="col">P</td> : <td scope="col">L</td>}
+                                                          {/* <td scope="col">{item.jenis_kelamin}</td> */}
                                                           <td scope="col">{item.tanggal_lahir.split("T")[0]}</td>
                                                           <td scope="col">{item.alamat}</td>
                                                           <td scope="col">{item.no_telp}</td>
@@ -160,7 +161,7 @@ function ListPasienNakes() {
                                                           <td scope="col">{index + 1}</td>
                                                           <td scope="col">{item.nik}</td>
                                                           <td scope="col">{item.nama}</td>
-                                                          <td scope="col">{item.jenis_kelamin}</td>
+                                                          {item.jenis_kelamin === "perempuan" ? <td scope="col">P</td> : <td scope="col">L</td>}
                                                           <td scope="col">{item.tanggal_lahir.split("T")[0]}</td>
                                                           <td scope="col">{item.alamat}</td>
                                                           <td scope="col">{item.no_telp}</td>
@@ -181,7 +182,7 @@ function ListPasienNakes() {
                                                       </tr>
                                                   );
                                               })}
-                                        {modalShow ? <ModalDataPasien show={modalShow} onHide={() => setModalShow(false)} data={modalState} /> : null}
+                                        {modalShow ? <ModalDataPasien show={modalShow} size="lg" onHide={() => setModalShow(false)} data={modalState} /> : null}
                                     </tbody>
                                 </table>
                             </div>
