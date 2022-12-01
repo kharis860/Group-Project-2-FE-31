@@ -86,14 +86,14 @@ function Konsultasi() {
                       No
                     </th>
                     <th scope="col" className="col-sm-2">
-                      ID Pasien
+                      NIK
                     </th>
                     <th scope="col">Nama Pasien</th>
                     <th scope="col" className="col-sm-1">
                       Jenis Kelamin
                     </th>
                     <th scope="col" className="col-sm-1">
-                      NIK
+                      Telepon
                     </th>
                     <th scope="col" className="col-sm-2">
                       Tanggal Lahir
@@ -107,11 +107,11 @@ function Konsultasi() {
                     item.status ? null : (
                       <tr key={index}>
                         <td scope="col">{index + 1}</td>
-                        <td scope="col">{item.pasien._id}</td>
+                        <td scope="col">{item.pasien.nik}</td>
                         <td scope="col">{item.pasien.nama}</td>
                         <td scope="col">{item.pasien.jenis_kelamin}</td>
-                        <td scope="col">{item.pasien.nik}</td>
-                        <td scope="col">{item.pasien.tanggal_lahir}</td>
+                        <td scope="col">{item.pasien.no_telp}</td>
+                        <td scope="col">{item.pasien.tanggal_lahir.split("T")[0]}</td>
                         <td scope="col">
                           <button id="submit${i}" onClick={() => teleRekamMedis(index, item.pasien._id)} className="btn btn-sm" role="button">
                             <i className="material-icons" style={{ font_size: "15px" }}>

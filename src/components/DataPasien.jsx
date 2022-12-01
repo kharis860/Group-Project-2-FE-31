@@ -10,9 +10,9 @@ import axios from "axios";
 
 function DataPasien() {
   const tele = useNavigate();
-  function teleRiwayat(index) {
+  function teleRiwayat(index, id) {
     dispatch(addId(index));
-    tele("/dashboard/riwayat");
+    tele("/dashboard/riwayat/" + id);
   }
   const dispatch = useDispatch();
   const state = useSelector((state) => state.data);
@@ -122,14 +122,14 @@ function DataPasien() {
                         No
                       </th>
                       <th scope="col" className="col-sm-1">
-                        ID Pasien
+                        NIK
                       </th>
                       <th scope="col">Nama Pasien</th>
                       <th scope="col" className="col-sm-1">
                         Jenis Kelamin
                       </th>
                       <th scope="col" className="col-sm-1">
-                        NIK
+                        Telepon
                       </th>
                       <th scope="col" className="col-sm-2">
                         Tanggal Lahir
@@ -146,14 +146,14 @@ function DataPasien() {
                       item.status ? (
                         <tr id="row" key={index}>
                           <td scope="col">{index + 1}</td>
-                          <td scope="col">{item.pasien._id}</td>
+                          <td scope="col">{item.pasien.nik}</td>
                           <td scope="col">{item.pasien.nama}</td>
                           <td scope="col">{item.pasien.jenis_kelamin}</td>
-                          <td scope="col">{item.pasien.nik}</td>
+                          <td scope="col">{item.pasien.no_telp}</td>
                           <td scope="col">{item.pasien.tanggal_lahir.split("T")[0]}</td>
                           <td scope="col">{item.pasien.alamat}</td>
                           <td scope="col">
-                            <button id="" className="btn btn-sm" role="button" onClick={() => teleRiwayat(index)}>
+                            <button id="" className="btn btn-sm" role="button" onClick={() => teleRiwayat(index, item.pasien._id)}>
                               <i className="material-icons">zoom_in</i>
                               Lihat
                             </button>

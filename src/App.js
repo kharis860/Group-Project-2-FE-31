@@ -16,10 +16,7 @@ import TambahPasienNakes from "./components/TambahPasienNakes";
 import DashboardNakes from "./components/DashboardNakes";
 import InnerDashboardNakes from "./components/InnerDashboardNakes";
 
-
 function App() {
-  
-
   return (
     <Routes>
       <Route path="/" element={<Login />} />
@@ -27,7 +24,7 @@ function App() {
         <Route index element={<InnerDashboard />} />
         <Route path="data" element={<DataPasien />} />
         <Route path="konsultasi" element={<Konsultasi />} />
-        <Route path="riwayat" element={<RiwayatPenyakit />} />
+        <Route path="riwayat/:id" element={<RiwayatPenyakit />} />
         <Route path="rekam/:id" element={<RekamMedis />} />
       </Route>
       <Route path="/dashboardNakes" element={<DashboardNakes />}>
