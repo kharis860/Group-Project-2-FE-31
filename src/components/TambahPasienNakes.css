@@ -1,82 +1,82 @@
 .row {
-    width: inherit;
+  width: inherit;
 }
 .form-con {
-    border: 1px solid black;
+  border: 1px solid black;
 }
 
 .form {
-    display: flex;
+  display: flex;
 }
 
 .rowForm {
-    width: 100%;
+  width: 100%;
 }
 
 .inputRow label {
-    display: block;
-    font-weight: 600;
+  display: block;
+  font-weight: 600;
 }
 
 .inputRow input,
 .inputRow textarea,
 .inputRow select {
-    border: 0.1px solid black;
-    border-radius: 10px;
-    box-shadow: 0.5px 0.5px 7px black;
-    padding: 5px;
-    resize: none;
-    width: 100%;
+  border: 0.1px solid black;
+  border-radius: 10px;
+  box-shadow: 0.5px 0.5px 7px black;
+  padding: 5px;
+  resize: none;
+  width: 100%;
 }
 
 .buttonRow .col {
-    display: flex;
-    justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .buttonRow #submitTambahPasien {
-    padding: 5px 16px;
-    border: none;
-    border-radius: 6px;
-    background-color: #66ba41;
-    color: rgb(255, 255, 255);
-    margin-right: 10px;
+  padding: 5px 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #66ba41;
+  color: rgb(255, 255, 255);
+  margin-right: 10px;
 }
 
 .buttonRow #submitReset {
-    background-color: #ba4141;
-    padding: 5px 16px;
-    border: none;
-    border-radius: 6px;
-    color: rgb(255, 255, 255);
+  background-color: #ba4141;
+  padding: 5px 16px;
+  border: none;
+  border-radius: 6px;
+  color: rgb(255, 255, 255);
 }
 
 .buttonRow #submitTambahPasien:hover {
-    color: white;
-    background-color: #4c7d37;
-    display: inline-block;
-    vertical-align: middle;
-    -webkit-transform: perspective(1px) translateZ(0);
-    transform: perspective(3px) translateZ(1);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    overflow: hidden;
-    -webkit-transition-duration: 0.3s;
-    transition-duration: 0.4s;
-    -webkit-transition-property: color, background-color;
-    transition-property: color, background-color;
+  color: white;
+  background-color: #4c7d37;
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(3px) translateZ(1);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  overflow: hidden;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.4s;
+  -webkit-transition-property: color, background-color;
+  transition-property: color, background-color;
 }
 
 .buttonRow #submitReset:hover {
-    color: white;
-    background-color: #7d3737;
-    display: inline-block;
-    vertical-align: middle;
-    -webkit-transform: perspective(1px) translateZ(0);
-    transform: perspective(3px) translateZ(1);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    overflow: hidden;
-    -webkit-transition-duration: 0.3s;
-    transition-duration: 0.4s;
-    -webkit-transition-property: color, background-color;
-    transition-property: color, background-color;
+  color: white;
+  background-color: #7d3737;
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(3px) translateZ(1);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  overflow: hidden;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.4s;
+  -webkit-transition-property: color, background-color;
+  transition-property: color, background-color;
 }

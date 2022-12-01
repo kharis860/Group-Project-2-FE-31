@@ -1,8 +1,8 @@
 export const ADDID = "ADDID";
 
-export function addId(index) {
+export function addId(idKonsul) {
   return {
     type: ADDID,
-    index,
+    idKonsul,
   };
 }
