@@ -19,6 +19,20 @@ function ListPasienNakes() {
     const user = localStorage.getItem("credentialLogin");
     const users = JSON.parse(user);
 
+    // ====================== USE EFFECT ===============
+    // Get Data Pasien
+    useEffect(() => {
+        axios
+            .get("https://groupproject2-production.up.railway.app/pasien")
+            .then((res) => {
+                setAPIData(res.data.data);
+                // console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
+
     // =============== HANDLE FUNCTION ====================
     // navigation of button Tambah Pasien
     const tambahPasien = (e) => {
@@ -45,25 +59,6 @@ function ListPasienNakes() {
         return <Navigate to="/error" />;
         // tele("/error");
     }
-
-    // ====================== USE EFFECT ===============
-    // Get Data Pasien
-    useEffect(() => {
-        axios
-            .get("https://groupproject2-production.up.railway.app/pasien")
-            .then((res) => {
-                setAPIData(res.data.data);
-                // console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, []);
-
-    // Data role guard
-    // useEffect(() => {
-    //     console.log(users);
-    // }, []);
 
     return (
         <>

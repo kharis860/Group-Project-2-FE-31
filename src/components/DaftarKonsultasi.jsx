@@ -20,6 +20,33 @@ function DaftarKonsultasi() {
     const user = localStorage.getItem("credentialLogin");
     const users = JSON.parse(user);
 
+    // ====================== USE EFFECT =====================
+    // get data pasien
+    useEffect(() => {
+        axios
+            .get("https://groupproject2-production.up.railway.app/pasien")
+            .then(function (response) {
+                // console.log(response.data.data);
+                setAPIPasien(response.data.data);
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }, []);
+
+    // get data dokter
+    useEffect(() => {
+        axios
+            .get("https://groupproject2-production.up.railway.app/user?role=dokter")
+            .then((response) => {
+                setAPIDokter(response.data.data);
+                // console.log(response.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
+
     // ==================== HANDLE FUNCTION =================
     // search handle
     const handleSearch = (searchValue) => {
@@ -81,38 +108,6 @@ function DaftarKonsultasi() {
         console.log("anda tidak boleh masuk");
         return <Navigate to="/error" />;
     }
-
-    // ====================== USE EFFECT =====================
-    // get data pasien
-    useEffect(() => {
-        axios
-            .get("https://groupproject2-production.up.railway.app/pasien")
-            .then(function (response) {
-                // console.log(response.data.data);
-                setAPIPasien(response.data.data);
-            })
-            .catch(function (error) {
-                console.error(error);
-            });
-    }, []);
-
-    // get data dokter
-    useEffect(() => {
-        axios
-            .get("https://groupproject2-production.up.railway.app/user?role=dokter")
-            .then((response) => {
-                setAPIDokter(response.data.data);
-                // console.log(response.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, []);
-
-    // Data role guard
-    // useEffect(() => {
-    //     console.log(users);
-    // }, []);
 
     return (
         <>
