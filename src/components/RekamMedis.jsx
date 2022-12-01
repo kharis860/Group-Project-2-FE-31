@@ -6,17 +6,36 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { sendData } from "./Redux/action/dataAction";
 import { useEffect } from "react";
-import { Navigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, Navigate } from "react-router-dom";
 
 function RekamMedis() {
   const tele = useNavigate();
   const dispatch = useDispatch();
+  let { id } = useParams();
   const state = useSelector((state) => state.data);
   const stateId = useSelector((state) => state.id);
+  console.log(state.pasien);
+  console.log(stateId.id);
 
   useEffect(() => {
     dispatch(sendData());
+    const options = {
+      method: "GET",
+      url: "https://groupproject2-production.up.railway.app/pasien/" + id,
+      headers: { accept: "application/json" },
+    };
+
+    axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
+        setCleanDataPasien(response.data);
+        console.log(cleanDataPasien);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+    console.log(id);
   }, []);
 
   const [isiTanggal, setIsiTanggal] = useState("");
@@ -24,17 +43,13 @@ function RekamMedis() {
   const [isiDiagnosis, setIsiDiagnosis] = useState("");
   const [isiObat, setIsiObat] = useState("");
   const [isiCatatan, setIsiCatatan] = useState("");
-  const [tes, setTes] = useState([]);
-  useEffect(() => {
-    axios.get("https://6350e03cdfe45bbd55b074ed.mockapi.io/medTechAPI/pasien/3").then((element) => {
-      setTes(element.data);
-    });
-  }, []);
+  const [cleanDataPasien, setCleanDataPasien] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const postData = {
-      tanggalBerobat: isiTanggal,
+      konsultasi: stateId.id,
+      pasien: id,
       anamnesis: isiAnamnesis,
       diagnosis: isiDiagnosis,
       obat: isiObat,
@@ -43,7 +58,7 @@ function RekamMedis() {
 
     axios
 
-      .post(`https://6350e03cdfe45bbd55b074ed.mockapi.io/medTechAPI/pasien/3`, postData)
+      .post(`https://groupproject2-production.up.railway.app/rekam`, postData)
 
       .then((res) => {
         console.log(res);
@@ -57,7 +72,30 @@ function RekamMedis() {
     setIsiDiagnosis("");
     setIsiObat("");
     setIsiCatatan("");
+
+    const editStatus = { status: true };
+
+    // mengupdate data menjadi true
+    axios.patch(`https://groupproject2-production.up.railway.app/konsultasi/${stateId.id}`, editStatus).then((res) => {
+      console.log(res);
+    });
   };
+  //   const options = {
+  //     method: "PATCH",
+  //     url: `https://groupproject2-production.up.railway.app/konsultasi/${stateId.id}`,
+  //     headers: { accept: "application/json", "content-type": "application/json" },
+  //     data: { status: true },
+  //   };
+
+  //   axios
+  //     .request(options)
+  //     .then(function (response) {
+  //       console.log(response.data);
+  //     })
+  //     .catch(function (error) {
+  //       console.error(error);
+  //     });
+  // };
   // start ambil data role guard
 
   const user = localStorage.getItem("credentialLogin");
@@ -65,6 +103,9 @@ function RekamMedis() {
   const users = JSON.parse(user);
   useEffect(() => {
     console.log(users.role);
+  }, []);
+  useEffect(() => {
+    console.log(id);
   }, []);
 
   // end ambil data role guard
@@ -76,6 +117,7 @@ function RekamMedis() {
     // tele("/error");
   }
   // end role guard
+
   return (
     <div className="global">
       <Navbar />
@@ -88,7 +130,54 @@ function RekamMedis() {
             <h1>Data Pasien</h1>
             <h6>Identitas Pasien</h6>
           </div>
-          {state.pasien
+          <div className="id-pasien">
+            <div className="isi-id">
+              <div className="mb-3">
+                <div className="p-2">
+                  <h5>ID Pasien</h5>
+                  <p>{cleanDataPasien._id}</p>
+                </div>
+                <div className="p-2">
+                  <h5>Jenis Kelamin</h5>
+                  <p>{cleanDataPasien.jenis_kelamin}</p>
+                </div>
+                <div className="p-2">
+                  <h5>Pekerjaan</h5>
+                  <p>{cleanDataPasien.pekerjaan}</p>
+                </div>
+              </div>
+              <div className="mb-3">
+                <div className="p-2">
+                  <h5>Nama Lengkap</h5>
+                  <p>{cleanDataPasien.nama}</p>
+                </div>
+                <div className="p-2">
+                  <h5>Tanggal lahir</h5>
+                  <p>{cleanDataPasien.tanggal_lahir}</p>
+                </div>
+                <div className="p-2">
+                  <h5>Alergi Obat</h5>
+                  <p>{cleanDataPasien.alergi_obat}</p>
+                </div>
+              </div>
+              <div className="mb-3">
+                <div className="p-2">
+                  <h5>NIK</h5>
+                  <p>{cleanDataPasien.nik}</p>
+                </div>
+                <div className="p-2">
+                  <h5>Alamat</h5>
+                  <p>{cleanDataPasien.alamat}</p>
+                </div>
+                <div className="p-2">
+                  <h5>Telepon</h5>
+                  <p>{cleanDataPasien.no_telp}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* {state.pasien
             .filter((pasien) => pasien.id == stateId.id + 1)
             .map((item, index) => (
               <div className="id-pasien" key={index}>
@@ -138,7 +227,7 @@ function RekamMedis() {
                 </div>
               </div>
             ))}
-        </div>
+        </div> */}
         {/*end identitas pasien*/}
 
         {/* start akordion riwayat */}
@@ -201,12 +290,6 @@ function RekamMedis() {
         <div className="rekam">
           <div className="head-rekam">
             <h1>Isi Rekam Medis</h1>
-          </div>
-          <div className="date">
-            <form onSubmit={handleSubmit}>
-              <label>Tanggal periksa</label>
-              <input type="text" value={isiTanggal} onChange={(e) => setIsiTanggal(e.target.value)} id="isiTanggal" placeholder="19 agustus 2021" />
-            </form>
           </div>
           <div className="form-rekam">
             <form id="tArea" onSubmit={handleSubmit}>
