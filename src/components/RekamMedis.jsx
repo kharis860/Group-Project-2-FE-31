@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { sendData } from "./Redux/action/dataAction";
 import { useEffect } from "react";
 import { useNavigate, useParams, Navigate } from "react-router-dom";
+import swal from "sweetalert";
 
 function RekamMedis() {
   const tele = useNavigate();
@@ -100,6 +101,12 @@ function RekamMedis() {
     // mengupdate data menjadi true
     axios.patch(`https://groupproject2-production.up.railway.app/konsultasi/${stateId.id}`, editStatus).then((res) => {
       console.log(res);
+    });
+
+    swal({
+      title: "Sukses!",
+      text: "Berhasil Menambahkan Rekam Medis!",
+      icon: "success",
     });
   };
   //   const options = {
