@@ -88,7 +88,7 @@ function ListPasienNakes() {
                             <div className="col-3"></div>
                             <div className="col-6">
                                 <div className="input-group flex-nowrap">
-                                    <input type="text" onChange={(e) => handleSearch(e.target.value)} className="form-control" placeholder="Cari berdasarkan ID Pasien atau Nama" id="inputSearch" />
+                                    <input type="text" onChange={(e) => handleSearch(e.target.value)} className="form-control" placeholder="Cari berdasarkan Nama Pasien" id="inputSearch" />
                                     <span className="input-group-text" id="icon-search">
                                         {" "}
                                         <i className="material-icons">search</i>
