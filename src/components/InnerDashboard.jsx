@@ -1,7 +1,24 @@
 import "../components/Dashboard.css";
 import Navbar from "./Navbar";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 function InnerDashboard() {
+  const state = useSelector((state) => state.data);
+  const allPasien = state.pasien;
+
+  // allPasien.map((item, index) => {
+  //   // console.log(item);
+  //   if (item.status === false) {
+  //     // console.log(item);
+  //     setJumlahPasien(item);
+  //   }
+  // });
+
+  const filteredAllPasienFalse = allPasien.filter((pasien) => pasien.status === false);
+
+  const filteredAllPasienTrue = allPasien.filter((pasien) => pasien.status === true);
+
   return (
     <div>
       {/*start kanan*/}
@@ -15,7 +32,7 @@ function InnerDashboard() {
               <div className="card-1">
                 <div className="inner-card-1">
                   <div className="counter">
-                    <h1 id="jumlahPasien"></h1>
+                    <h1 id="jumlahPasien">{filteredAllPasienFalse.length}</h1>
                   </div>
                   <div className="teks">
                     <h2>Jumlah Pasien</h2>
@@ -25,7 +42,7 @@ function InnerDashboard() {
               <div className="card-2">
                 <div className="inner-card-1">
                   <div className="counter">
-                    <h1>18</h1>
+                    <h1>{filteredAllPasienTrue.length}</h1>
                   </div>
                   <div className="teks">
                     <h2>Pasien Terlayani</h2>

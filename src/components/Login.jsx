@@ -29,7 +29,36 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     let isAlert = false;
-
+    // ambil data dari API baru
+    // axios
+    //   .post(
+    //     "https://groupproject2-production.up.railway.app/auth/login",
+    //     { username: username, password: password },
+    //     {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         accept: "application/json",
+    //       },
+    //     }
+    //   )
+    //   .then((res) => {
+    //     console.log(res);
+    //     // const token = res.data.token;
+    //     const credential = {
+    //       token: res.data.token,
+    //       uname: res.data.username,
+    //       email: res.data.email,
+    //       role: res.data.role,
+    //     };
+    //     localStorage.setItem("credentialLogin", JSON.stringify(credential));
+    //     if (res.data.role === "nakes") {
+    //       tele("/dashboardNakes");
+    //       // break;
+    //     } else {
+    //       tele("/dashboard");
+    //       // break;
+    //     }
+    //   });
     // start ambil data dari API
     axios
       .post(
