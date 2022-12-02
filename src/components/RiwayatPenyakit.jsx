@@ -83,7 +83,7 @@ function RiwayatPenyakit() {
         // tele("/error");
     }
     // end role guard
-    if (cleanDataPasien.tanggal_lahir) {
+    if (cleanDataRiwayat.tanggal_lahir) {
         return (
             <div className="global">
                 <Navbar />
