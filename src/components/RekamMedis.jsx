@@ -261,7 +261,7 @@ function RekamMedis() {
                 {/*codingan bootstrap */}
                 <Accordion defaultActiveKey={0}>
                   {dataRiwayat.map((item, index) => (
-                    <Accordion.Item eventKey={index}>
+                    <Accordion.Item eventKey={index} key={index}>
                       <Accordion.Header>Periksa {index + 1}</Accordion.Header>
                       <Accordion.Body>
                         <div>

@@ -1,19 +1,12 @@
 import "../components/Dashboard.css";
+import Navbar from "./Navbar";
 
 function InnerDashboardNakes() {
   return (
     <div>
       {/*start kanan*/}
       <div className="global">
-        {/* navbar start*/}
-        <nav className="nav">
-          <div className="profil">
-            <h5>Danar Riko</h5>
-
-            <img src={require("../Img/person.png")} alt="" width="40px" />
-          </div>
-        </nav>
-        {/* end navbar*/}
+        <Navbar />
 
         {/* start informasi */}
         <section className="info">
