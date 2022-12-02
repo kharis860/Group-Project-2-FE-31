@@ -87,14 +87,6 @@ function TambahPasienNakes() {
         setAlergiObat("");
     };
 
-    const handleInfoAlert = () => {
-        swal({
-            title: "Sukses!",
-            text: "Reset Form Berhasil",
-            icon: "info",
-        });
-    };
-
     // role guard
     if (users.role === "dokter") {
         console.log("anda tidak boleh masuk");
@@ -159,7 +151,9 @@ function TambahPasienNakes() {
                                     <Form.Group className="mb-3">
                                         <Form.Label className="formLabel">Alergi Obat</Form.Label>
                                         <Form.Control as={"textarea"} name="inputAlergiObat" className="inputForm" placeholder="Alergi Obat" rows={3} value={alergiObat} onChange={(e) => setAlergiObat(e.target.value)} required />
-                                        <Form.Text className="text-muted fst-italic">isi dengan tanda strip (-) jika tidak memiliki alergi</Form.Text>
+                                        <Form.Text className="text-muted fst-italic">
+                                            isi dengan kata <b>tidak ada</b> jika tidak memiliki alergi
+                                        </Form.Text>
                                     </Form.Group>
                                 </Col>
                             </Row>
@@ -168,7 +162,7 @@ function TambahPasienNakes() {
                                     <Button id="submitTambahPasien" type="submit">
                                         Simpan
                                     </Button>
-                                    <Button id="submitReset" type="reset" onClick={(handleReset, handleInfoAlert)}>
+                                    <Button id="submitReset" type="reset" onClick={handleReset}>
                                         Reset
                                     </Button>
                                 </Col>
