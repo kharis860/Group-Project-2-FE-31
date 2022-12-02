@@ -83,117 +83,119 @@ function RiwayatPenyakit() {
         // tele("/error");
     }
     // end role guard
-    return (
-        <div className="global">
-            <Navbar />
-            {/*start riwayat penyakit*/}
-            <section className="pasien">
-                {/*start identitas pasien*/}
-                <div id="identitas" className="Identitas">
-                    <div className="head-isi">
-                        <h1>Data Pasien</h1>
-                        <h6>Identitas Pasien</h6>
-                    </div>
-                    <div className="id-pasien">
-                        <div className="isi-id">
-                            <div className="mb-3">
-                                <div className="p-2">
-                                    <h5>ID Pasien</h5>
-                                    <p>{cleanDataRiwayat._id}</p>
+    if (cleanDataPasien.tanggal_lahir) {
+        return (
+            <div className="global">
+                <Navbar />
+                {/*start riwayat penyakit*/}
+                <section className="pasien">
+                    {/*start identitas pasien*/}
+                    <div id="identitas" className="Identitas">
+                        <div className="head-isi">
+                            <h1>Data Pasien</h1>
+                            <h6>Identitas Pasien</h6>
+                        </div>
+                        <div className="id-pasien">
+                            <div className="isi-id">
+                                <div className="mb-3">
+                                    <div className="p-2">
+                                        <h5>ID Pasien</h5>
+                                        <p>{cleanDataRiwayat._id}</p>
+                                    </div>
+                                    <div className="p-2">
+                                        <h5>Jenis Kelamin</h5>
+                                        <p>{cleanDataRiwayat.jenis_kelamin}</p>
+                                    </div>
+                                    <div className="p-2">
+                                        <h5>Pekerjaan</h5>
+                                        <p>{cleanDataRiwayat.pekerjaan}</p>
+                                    </div>
                                 </div>
-                                <div className="p-2">
-                                    <h5>Jenis Kelamin</h5>
-                                    <p>{cleanDataRiwayat.jenis_kelamin}</p>
+                                <div className="mb-3">
+                                    <div className="p-2">
+                                        <h5>Nama Lengkap</h5>
+                                        <p>{cleanDataRiwayat.nama}</p>
+                                    </div>
+                                    <div className="p-2">
+                                        <h5>Tanggal lahir</h5>
+                                        <p>{cleanDataRiwayat.tanggal_lahir.split("T")[0]}</p>
+                                    </div>
+                                    <div className="p-2">
+                                        <h5>Alergi Obat</h5>
+                                        <p>{cleanDataRiwayat.alergi_obat}</p>
+                                    </div>
                                 </div>
-                                <div className="p-2">
-                                    <h5>Pekerjaan</h5>
-                                    <p>{cleanDataRiwayat.pekerjaan}</p>
-                                </div>
-                            </div>
-                            <div className="mb-3">
-                                <div className="p-2">
-                                    <h5>Nama Lengkap</h5>
-                                    <p>{cleanDataRiwayat.nama}</p>
-                                </div>
-                                <div className="p-2">
-                                    <h5>Tanggal lahir</h5>
-                                    <p>{cleanDataRiwayat.tanggal_lahir}</p>
-                                </div>
-                                <div className="p-2">
-                                    <h5>Alergi Obat</h5>
-                                    <p>{cleanDataRiwayat.alergi_obat}</p>
-                                </div>
-                            </div>
-                            <div className="mb-3">
-                                <div className="p-2">
-                                    <h5>NIK</h5>
-                                    <p>{cleanDataRiwayat.nik}</p>
-                                </div>
-                                <div className="p-2">
-                                    <h5>Alamat</h5>
-                                    <p>{cleanDataRiwayat.alamat}</p>
-                                </div>
-                                <div className="p-2">
-                                    <h5>Telepon</h5>
-                                    <p>{cleanDataRiwayat.no_telp}</p>
+                                <div className="mb-3">
+                                    <div className="p-2">
+                                        <h5>NIK</h5>
+                                        <p>{cleanDataRiwayat.nik}</p>
+                                    </div>
+                                    <div className="p-2">
+                                        <h5>Alamat</h5>
+                                        <p>{cleanDataRiwayat.alamat}</p>
+                                    </div>
+                                    <div className="p-2">
+                                        <h5>Telepon</h5>
+                                        <p>{cleanDataRiwayat.no_telp}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                {/*end identitas pasien*/}
-                <div className="riwayat">
-                    <div className="head-isi">
-                        <h1>Riwayat Penyakit</h1>
-                        <div>
-                            <div className="akord-riwayat">
-                                {/*codingan bootstrap */}
-                                <Accordion defaultActiveKey={0}>
-                                    {dataRiwayat.map((item, index) => (
-                                        <Accordion.Item eventKey={index}>
-                                            <Accordion.Header>Periksa {index + 1}</Accordion.Header>
-                                            <Accordion.Body>
-                                                <div>
-                                                    <ul>
-                                                        <li>
-                                                            <h5>Tanggal Periksa</h5>
-                                                        </li>
-                                                        <h6>{item.tanggal_rekam}</h6>
-                                                        <li>
-                                                            <h5>Anamnesis</h5>
-                                                        </li>
-                                                        <h6>{item.anamnesis}</h6>
-                                                        <li>
-                                                            <h5>Diagnosa</h5>
-                                                        </li>
-                                                        <h6>{item.diagnosis}</h6>
-                                                    </ul>
-                                                </div>
-                                                <div>
-                                                    <ul>
-                                                        <li>
-                                                            <h5>Obat</h5>
-                                                        </li>
-                                                        <h6>{item.obat}</h6>
-                                                        <li>
-                                                            <h5>Catatan</h5>
-                                                        </li>
-                                                        <h6>{item.catatan}</h6>
-                                                    </ul>
-                                                </div>
-                                            </Accordion.Body>
-                                        </Accordion.Item>
-                                    ))}
-                                </Accordion>
-                                {/*end codingan bootstrap*/}
+                    {/*end identitas pasien*/}
+                    <div className="riwayat">
+                        <div className="head-isi">
+                            <h1>Riwayat Penyakit</h1>
+                            <div>
+                                <div className="akord-riwayat">
+                                    {/*codingan bootstrap */}
+                                    <Accordion defaultActiveKey={0}>
+                                        {dataRiwayat.map((item, index) => (
+                                            <Accordion.Item eventKey={index}>
+                                                <Accordion.Header>Periksa {index + 1}</Accordion.Header>
+                                                <Accordion.Body>
+                                                    <div>
+                                                        <ul>
+                                                            <li>
+                                                                <h5>Tanggal Periksa</h5>
+                                                            </li>
+                                                            <h6>{item.tanggal_rekam.split("T")[0]}</h6>
+                                                            <li>
+                                                                <h5>Anamnesis</h5>
+                                                            </li>
+                                                            <h6>{item.anamnesis}</h6>
+                                                            <li>
+                                                                <h5>Diagnosa</h5>
+                                                            </li>
+                                                            <h6>{item.diagnosis}</h6>
+                                                        </ul>
+                                                    </div>
+                                                    <div>
+                                                        <ul>
+                                                            <li>
+                                                                <h5>Obat</h5>
+                                                            </li>
+                                                            <h6>{item.obat}</h6>
+                                                            <li>
+                                                                <h5>Catatan</h5>
+                                                            </li>
+                                                            <h6>{item.catatan}</h6>
+                                                        </ul>
+                                                    </div>
+                                                </Accordion.Body>
+                                            </Accordion.Item>
+                                        ))}
+                                    </Accordion>
+                                    {/*end codingan bootstrap*/}
+                                </div>
                             </div>
                         </div>
+                        {/*end riwayat penyakit*/}
                     </div>
-                    {/*end riwayat penyakit*/}
-                </div>
-            </section>
-        </div>
-    );
+                </section>
+            </div>
+        );
+    }
 }
 
 export default RiwayatPenyakit;

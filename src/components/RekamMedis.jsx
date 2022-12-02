@@ -129,159 +129,160 @@ function RekamMedis() {
         // tele("/error");
     }
     // end role guard
-
-    return (
-        <div className="global">
-            <Navbar />
-            {/*start riwayat penyakit*/}
-            <section className="pasien">
-                {/*start identitas pasien*/}
-                <div id="identitas" className="Identitas">
-                    {/*isi dari js*/}
-                    <div className="head-isi">
-                        <h1>Data Pasien</h1>
-                        <h6>Identitas Pasien</h6>
-                    </div>
-                    <div className="id-pasien">
-                        <div className="isi-id">
-                            <div className="mb-3">
-                                <div className="p-2">
-                                    <h5>ID Pasien</h5>
-                                    <p>{cleanDataPasien._id}</p>
+    if (cleanDataPasien.tanggal_lahir) {
+        return (
+            <div className="global">
+                <Navbar />
+                {/*start riwayat penyakit*/}
+                <section className="pasien">
+                    {/*start identitas pasien*/}
+                    <div id="identitas" className="Identitas">
+                        {/*isi dari js*/}
+                        <div className="head-isi">
+                            <h1>Data Pasien</h1>
+                            <h6>Identitas Pasien</h6>
+                        </div>
+                        <div className="id-pasien">
+                            <div className="isi-id">
+                                <div className="mb-3">
+                                    <div className="p-2">
+                                        <h5>ID Pasien</h5>
+                                        <p>{cleanDataPasien._id}</p>
+                                    </div>
+                                    <div className="p-2">
+                                        <h5>Jenis Kelamin</h5>
+                                        <p>{cleanDataPasien.jenis_kelamin}</p>
+                                    </div>
+                                    <div className="p-2">
+                                        <h5>Pekerjaan</h5>
+                                        <p>{cleanDataPasien.pekerjaan}</p>
+                                    </div>
                                 </div>
-                                <div className="p-2">
-                                    <h5>Jenis Kelamin</h5>
-                                    <p>{cleanDataPasien.jenis_kelamin}</p>
+                                <div className="mb-3">
+                                    <div className="p-2">
+                                        <h5>Nama Lengkap</h5>
+                                        <p>{cleanDataPasien.nama}</p>
+                                    </div>
+                                    <div className="p-2">
+                                        <h5>Tanggal lahir</h5>
+                                        <p>{cleanDataPasien.tanggal_lahir.split("T")[0]}</p>
+                                    </div>
+                                    <div className="p-2">
+                                        <h5>Alergi Obat</h5>
+                                        <p>{cleanDataPasien.alergi_obat}</p>
+                                    </div>
                                 </div>
-                                <div className="p-2">
-                                    <h5>Pekerjaan</h5>
-                                    <p>{cleanDataPasien.pekerjaan}</p>
-                                </div>
-                            </div>
-                            <div className="mb-3">
-                                <div className="p-2">
-                                    <h5>Nama Lengkap</h5>
-                                    <p>{cleanDataPasien.nama}</p>
-                                </div>
-                                <div className="p-2">
-                                    <h5>Tanggal lahir</h5>
-                                    <p>{cleanDataPasien.tanggal_lahir}</p>
-                                </div>
-                                <div className="p-2">
-                                    <h5>Alergi Obat</h5>
-                                    <p>{cleanDataPasien.alergi_obat}</p>
-                                </div>
-                            </div>
-                            <div className="mb-3">
-                                <div className="p-2">
-                                    <h5>NIK</h5>
-                                    <p>{cleanDataPasien.nik}</p>
-                                </div>
-                                <div className="p-2">
-                                    <h5>Alamat</h5>
-                                    <p>{cleanDataPasien.alamat}</p>
-                                </div>
-                                <div className="p-2">
-                                    <h5>Telepon</h5>
-                                    <p>{cleanDataPasien.no_telp}</p>
+                                <div className="mb-3">
+                                    <div className="p-2">
+                                        <h5>NIK</h5>
+                                        <p>{cleanDataPasien.nik}</p>
+                                    </div>
+                                    <div className="p-2">
+                                        <h5>Alamat</h5>
+                                        <p>{cleanDataPasien.alamat}</p>
+                                    </div>
+                                    <div className="p-2">
+                                        <h5>Telepon</h5>
+                                        <p>{cleanDataPasien.no_telp}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                {/*end identitas pasien*/}
+                    {/*end identitas pasien*/}
 
-                {/* start akordion riwayat */}
-                <div className="riwayat">
-                    <div className="head-isi">
-                        <h1>Riwayat Penyakit</h1>
-                        <div>
-                            <div className="akord-riwayat">
-                                {/*codingan bootstrap */}
-                                <Accordion defaultActiveKey={0}>
-                                    {dataRiwayat.map((item, index) => (
-                                        <Accordion.Item eventKey={index} key={index}>
-                                            <Accordion.Header>Periksa {index + 1}</Accordion.Header>
-                                            <Accordion.Body>
-                                                <div>
-                                                    <ul>
-                                                        <li>
-                                                            <h5>Tanggal Periksa</h5>
-                                                        </li>
-                                                        <h6>{item.tanggal_rekam}</h6>
-                                                        <li>
-                                                            <h5>Anamnesis</h5>
-                                                        </li>
-                                                        <h6>{item.anamnesis}</h6>
-                                                        <li>
-                                                            <h5>Diagnosa</h5>
-                                                        </li>
-                                                        <h6>{item.diagnosis}</h6>
-                                                    </ul>
-                                                </div>
-                                                <div>
-                                                    <ul>
-                                                        <li>
-                                                            <h5>Obat</h5>
-                                                        </li>
-                                                        <h6>{item.obat}</h6>
-                                                        <li>
-                                                            <h5>Catatan</h5>
-                                                        </li>
-                                                        <h6>{item.catatan}</h6>
-                                                    </ul>
-                                                </div>
-                                            </Accordion.Body>
-                                        </Accordion.Item>
-                                    ))}
-                                </Accordion>
-                                {/*end codingan bootstrap*/}
+                    {/* start akordion riwayat */}
+                    <div className="riwayat">
+                        <div className="head-isi">
+                            <h1>Riwayat Penyakit</h1>
+                            <div>
+                                <div className="akord-riwayat">
+                                    {/*codingan bootstrap */}
+                                    <Accordion defaultActiveKey={0}>
+                                        {dataRiwayat.map((item, index) => (
+                                            <Accordion.Item eventKey={index} key={index}>
+                                                <Accordion.Header>Periksa {index + 1}</Accordion.Header>
+                                                <Accordion.Body>
+                                                    <div>
+                                                        <ul>
+                                                            <li>
+                                                                <h5>Tanggal Periksa</h5>
+                                                            </li>
+                                                            <h6>{item.tanggal_rekam.split("T")[0]}</h6>
+                                                            <li>
+                                                                <h5>Anamnesis</h5>
+                                                            </li>
+                                                            <h6>{item.anamnesis}</h6>
+                                                            <li>
+                                                                <h5>Diagnosa</h5>
+                                                            </li>
+                                                            <h6>{item.diagnosis}</h6>
+                                                        </ul>
+                                                    </div>
+                                                    <div>
+                                                        <ul>
+                                                            <li>
+                                                                <h5>Obat</h5>
+                                                            </li>
+                                                            <h6>{item.obat}</h6>
+                                                            <li>
+                                                                <h5>Catatan</h5>
+                                                            </li>
+                                                            <h6>{item.catatan}</h6>
+                                                        </ul>
+                                                    </div>
+                                                </Accordion.Body>
+                                            </Accordion.Item>
+                                        ))}
+                                    </Accordion>
+                                    {/*end codingan bootstrap*/}
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    {/*end riwayat penyakit*/}
-                </div>
-                {/* end akordion riwayat */}
-                {/* start form isi rekam medis */}
-                <div className="rekam">
-                    <div className="head-rekam">
-                        <h1>Isi Rekam Medis</h1>
+                        {/*end riwayat penyakit*/}
                     </div>
-                    <div className="form-rekam">
-                        <form id="tArea" onSubmit={handleSubmit}>
-                            <div className="grid-container">
-                                <div className="field">
-                                    <label>Anamnesis</label>
-                                    <textarea id="isiAnamnesis" value={isiAnamnesis} onChange={(e) => setIsiAnamnesis(e.target.value)} rows="4" cols="50" placeholder="Masukkan anamnesis..." required></textarea>
+                    {/* end akordion riwayat */}
+                    {/* start form isi rekam medis */}
+                    <div className="rekam">
+                        <div className="head-rekam">
+                            <h1>Isi Rekam Medis</h1>
+                        </div>
+                        <div className="form-rekam">
+                            <form id="tArea" onSubmit={handleSubmit}>
+                                <div className="grid-container">
+                                    <div className="field">
+                                        <label>Anamnesis</label>
+                                        <textarea id="isiAnamnesis" value={isiAnamnesis} onChange={(e) => setIsiAnamnesis(e.target.value)} rows="4" cols="50" placeholder="Masukkan anamnesis..." required></textarea>
+                                    </div>
+                                    <div className="field">
+                                        <label>Diagnosis</label>
+                                        <textarea id="isiDiagnosis" value={isiDiagnosis} onChange={(e) => setIsiDiagnosis(e.target.value)} rows="4" cols="50" placeholder="Masukkan diagnosis..." required></textarea>
+                                    </div>
+                                    <div className="field">
+                                        <label>Obat</label>
+                                        <textarea id="isiObat" value={isiObat} onChange={(e) => setIsiObat(e.target.value)} rows="4" cols="50" placeholder="Masukkan obat..." required></textarea>
+                                    </div>
+                                    <div className="field">
+                                        <label>Catatan</label>
+                                        <textarea id="isiCatatan" value={isiCatatan} onChange={(e) => setIsiCatatan(e.target.value)} rows="4" cols="50" placeholder="Masukkan catatan..." required></textarea>
+                                        <p className="text-muted fst-italic">
+                                            isi dengan kata <b>tidak ada</b> jika tidak tambahan
+                                        </p>
+                                    </div>
                                 </div>
-                                <div className="field">
-                                    <label>Diagnosis</label>
-                                    <textarea id="isiDiagnosis" value={isiDiagnosis} onChange={(e) => setIsiDiagnosis(e.target.value)} rows="4" cols="50" placeholder="Masukkan diagnosis..." required></textarea>
+                                <div className="button-rekam">
+                                    <button id="submitRiwayat" type="submit">
+                                        Simpan
+                                    </button>
                                 </div>
-                                <div className="field">
-                                    <label>Obat</label>
-                                    <textarea id="isiObat" value={isiObat} onChange={(e) => setIsiObat(e.target.value)} rows="4" cols="50" placeholder="Masukkan obat..." required></textarea>
-                                </div>
-                                <div className="field">
-                                    <label>Catatan</label>
-                                    <textarea id="isiCatatan" value={isiCatatan} onChange={(e) => setIsiCatatan(e.target.value)} rows="4" cols="50" placeholder="Masukkan catatan..." required></textarea>
-                                    <p className="text-muted fst-italic">
-                                        isi dengan kata <b>tidak ada</b> jika tidak tambahan
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="button-rekam">
-                                <button id="submitRiwayat" type="submit">
-                                    Simpan
-                                </button>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            </section>
-        </div>
-    );
+                </section>
+            </div>
+        );
+    }
 }
 
 export default RekamMedis;
