@@ -6,49 +6,52 @@
     display: flex;
 }
 
-.rowForm {
-    width: 100%;
-}
-
-.inputRow label {
-    display: block;
+.formLabel {
     font-weight: 600;
 }
 
-.inputRow input,
-.inputRow textarea,
-.inputRow select {
+.colLeft .inputForm {
+    width: 90%;
+}
+
+.colRight {
+    margin-left: -1rem;
+    padding: 0;
+}
+
+.inputForm {
     border: 0.1px solid black;
     border-radius: 10px;
-    box-shadow: 0.5px 0.5px 7px black;
     padding: 5px;
     resize: none;
-    width: 100%;
+    width: 85%;
 }
 
-.buttonRow .col {
-    display: flex;
-    justify-content: flex-end;
+.inputForm:active,
+.inputForm:focus,
+.inputForm:hover {
+    border: 0.1px solid black;
+    box-shadow: 0.5px 0.5px 7px black;
 }
 
-.buttonRow #submitTambahPasien {
-    padding: 5px 16px;
-    border: none;
-    border-radius: 6px;
+.buttonRow {
+    margin-right: 4rem;
+}
+
+#submitTambahPasien {
+    border: 1px solid #4b8a30;
     background-color: #66ba41;
     color: rgb(255, 255, 255);
     margin-right: 10px;
 }
 
-.buttonRow #submitReset {
+#submitReset {
     background-color: #ba4141;
-    padding: 5px 16px;
-    border: none;
-    border-radius: 6px;
+    border: 1px solid #913232;
     color: rgb(255, 255, 255);
 }
 
-.buttonRow #submitTambahPasien:hover {
+#submitTambahPasien:hover {
     color: white;
     background-color: #4c7d37;
     display: inline-block;
@@ -63,7 +66,7 @@
     transition-property: color, background-color;
 }
 
-.buttonRow #submitReset:hover {
+#submitReset:hover {
     color: white;
     background-color: #7d3737;
     display: inline-block;
