@@ -23,7 +23,7 @@ function RiwayatPenyakit() {
       console.log(val.riwayatPenyakit);
       val.riwayatPenyakit.map((item, index) => console.log(item));
     });
-
+  // useEffect ambil data pasien berdasarkan ID yang dikirim dari halaman data pasien dokter
   useEffect(() => {
     dispatch(sendData());
     const options = {
@@ -45,6 +45,7 @@ function RiwayatPenyakit() {
     console.log(id);
   }, []);
 
+  // useEffect ambil data riwayat penyakit pasien
   useEffect(() => {
     const options = {
       method: "GET",
@@ -144,14 +145,14 @@ function RiwayatPenyakit() {
         <div className="riwayat">
           <div className="head-isi">
             <h1>Riwayat Penyakit</h1>
-            {dataRiwayat.map((item, index) => (
-              <div>
-                <div className="akord-riwayat" key={index}>
-                  {/*codingan bootstrap */}
-                  <Accordion defaultActiveKey={index}>
-                    <Accordion.Item eventKey={index} key={index}>
+            <div>
+              <div className="akord-riwayat">
+                {/*codingan bootstrap */}
+                <Accordion defaultActiveKey={0}>
+                  {dataRiwayat.map((item, index) => (
+                    <Accordion.Item eventKey={index}>
                       <Accordion.Header>Periksa {index + 1}</Accordion.Header>
-                      <Accordion.Body key={index}>
+                      <Accordion.Body>
                         <div>
                           <ul>
                             <li>
@@ -182,13 +183,12 @@ function RiwayatPenyakit() {
                         </div>
                       </Accordion.Body>
                     </Accordion.Item>
-                  </Accordion>
-                  {/*end codingan bootstrap*/}
-                </div>
+                  ))}
+                </Accordion>
+                {/*end codingan bootstrap*/}
               </div>
-            ))}
+            </div>
           </div>
-
           {/*end riwayat penyakit*/}
         </div>
       </section>

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { sendData } from "./Redux/action/dataAction";
 import { useEffect } from "react";
 import { useNavigate, useParams, Navigate } from "react-router-dom";
+import swal from "sweetalert";
 
 function RekamMedis() {
   const tele = useNavigate();
@@ -17,6 +18,7 @@ function RekamMedis() {
   console.log(state.pasien);
   console.log(stateId.id);
 
+  // useEffect ambil data pasien berdasarkan ID yang dikirim dari halaman data pasien dokter
   useEffect(() => {
     dispatch(sendData());
     const options = {
@@ -38,13 +40,34 @@ function RekamMedis() {
     console.log(id);
   }, []);
 
+  // useEffect ambil data riwayat penyakit pasien
+  useEffect(() => {
+    const options = {
+      method: "GET",
+      url: `https://groupproject2-production.up.railway.app/rekam?id_pasien=${id}`,
+      headers: { accept: "application/json" },
+    };
+
+    axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data.data);
+        setDataRiwayat(response.data.data);
+        console.log(dataRiwayat);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }, []);
+
+  const [dataRiwayat, setDataRiwayat] = useState([]);
   const [isiTanggal, setIsiTanggal] = useState("");
   const [isiAnamnesis, setIsiAnamnesis] = useState("");
   const [isiDiagnosis, setIsiDiagnosis] = useState("");
   const [isiObat, setIsiObat] = useState("");
   const [isiCatatan, setIsiCatatan] = useState("");
   const [cleanDataPasien, setCleanDataPasien] = useState({});
-
+  console.log(dataRiwayat);
   const handleSubmit = (e) => {
     e.preventDefault();
     const postData = {
@@ -78,6 +101,12 @@ function RekamMedis() {
     // mengupdate data menjadi true
     axios.patch(`https://groupproject2-production.up.railway.app/konsultasi/${stateId.id}`, editStatus).then((res) => {
       console.log(res);
+    });
+
+    swal({
+      title: "Sukses!",
+      text: "Berhasil Menambahkan Rekam Medis!",
+      icon: "success",
     });
   };
   //   const options = {
@@ -234,53 +263,49 @@ function RekamMedis() {
         <div className="riwayat">
           <div className="head-isi">
             <h1>Riwayat Penyakit</h1>
-            {state.pasien
-              .filter((pasien) => pasien.id == stateId.id + 1)
-              .map((item, index) => (
-                <div>
-                  <div className="akord-riwayat" key={index}>
-                    {/*codingan bootstrap */}
-                    <Accordion defaultActiveKey={index}>
-                      {item.riwayatPenyakit.map((itemm, indexx) => (
-                        <Accordion.Item eventKey={indexx} key={indexx}>
-                          <Accordion.Header>Periksa {indexx + 1}</Accordion.Header>
-                          <Accordion.Body key={indexx}>
-                            <div>
-                              <ul>
-                                <li>
-                                  <h5>Tanggal Periksa</h5>
-                                </li>
-                                <h6>{itemm.tanggalBerobat}</h6>
-                                <li>
-                                  <h5>Anamnesis</h5>
-                                </li>
-                                <h6>{itemm.anamnesis}</h6>
-                                <li>
-                                  <h5>Diagnosa</h5>
-                                </li>
-                                <h6>{itemm.diagnosis}</h6>
-                              </ul>
-                            </div>
-                            <div>
-                              <ul>
-                                <li>
-                                  <h5>Obat</h5>
-                                </li>
-                                <h6>{itemm.obat}</h6>
-                                <li>
-                                  <h5>Catatan</h5>
-                                </li>
-                                <h6>{itemm.catatan}</h6>
-                              </ul>
-                            </div>
-                          </Accordion.Body>
-                        </Accordion.Item>
-                      ))}
-                    </Accordion>
-                    {/*end codingan bootstrap*/}
-                  </div>
-                </div>
-              ))}
+            <div>
+              <div className="akord-riwayat">
+                {/*codingan bootstrap */}
+                <Accordion defaultActiveKey={0}>
+                  {dataRiwayat.map((item, index) => (
+                    <Accordion.Item eventKey={index} key={index}>
+                      <Accordion.Header>Periksa {index + 1}</Accordion.Header>
+                      <Accordion.Body>
+                        <div>
+                          <ul>
+                            <li>
+                              <h5>Tanggal Periksa</h5>
+                            </li>
+                            <h6>{item.tanggal_rekam}</h6>
+                            <li>
+                              <h5>Anamnesis</h5>
+                            </li>
+                            <h6>{item.anamnesis}</h6>
+                            <li>
+                              <h5>Diagnosa</h5>
+                            </li>
+                            <h6>{item.diagnosis}</h6>
+                          </ul>
+                        </div>
+                        <div>
+                          <ul>
+                            <li>
+                              <h5>Obat</h5>
+                            </li>
+                            <h6>{item.obat}</h6>
+                            <li>
+                              <h5>Catatan</h5>
+                            </li>
+                            {/* <h6>{item.catatan}</h6> */}
+                          </ul>
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  ))}
+                </Accordion>
+                {/*end codingan bootstrap*/}
+              </div>
+            </div>
           </div>
 
           {/*end riwayat penyakit*/}
