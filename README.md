@@ -74,4 +74,4 @@ Login data that can be used is
 
 ## Link Deployment
 
-medtech-finalproject.netlify.app
+https://medtech-finalproject.netlify.app/
