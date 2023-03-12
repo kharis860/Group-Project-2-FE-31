@@ -1,0 +1,82 @@
+.form-con {
+    border: 1px solid black;
+}
+
+.form {
+    display: flex;
+}
+
+.formLabel {
+    font-weight: 600;
+}
+
+.colLeft .inputForm {
+    width: 90%;
+}
+
+.colRight {
+    margin-left: -1rem;
+    padding: 0;
+}
+
+.inputForm {
+    border: 0.1px solid black;
+    border-radius: 10px;
+    padding: 5px;
+    resize: none;
+    width: 85%;
+}
+
+.inputForm:active,
+.inputForm:focus,
+.inputForm:hover {
+    border: 0.1px solid black;
+    box-shadow: 0.5px 0.5px 7px black;
+}
+
+.buttonRow {
+    margin-right: 4rem;
+}
+
+#submitTambahPasien {
+    border: 1px solid #4b8a30;
+    background-color: #66ba41;
+    color: rgb(255, 255, 255);
+    margin-right: 10px;
+}
+
+#submitReset {
+    background-color: #ba4141;
+    border: 1px solid #913232;
+    color: rgb(255, 255, 255);
+}
+
+#submitTambahPasien:hover {
+    color: white;
+    background-color: #4c7d37;
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(3px) translateZ(1);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    overflow: hidden;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.4s;
+    -webkit-transition-property: color, background-color;
+    transition-property: color, background-color;
+}
+
+#submitReset:hover {
+    color: white;
+    background-color: #7d3737;
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(3px) translateZ(1);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    overflow: hidden;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.4s;
+    -webkit-transition-property: color, background-color;
+    transition-property: color, background-color;
+}
